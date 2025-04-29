@@ -14,19 +14,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>discovery-server</name>
 	<description>Service Registry for Getir Final Case</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
 
 	<properties>
 		<spring-cloud.version>2024.0.1</spring-cloud.version>
