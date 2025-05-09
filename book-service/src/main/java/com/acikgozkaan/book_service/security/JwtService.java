@@ -1,4 +1,4 @@
-package com.acikgozkaan.user_service.security.jwt;
+package com.acikgozkaan.book_service.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -15,36 +15,10 @@ import java.util.Date;
 public class JwtService {
 
     private final SecretKey secretKey;
-    private final long expirationMillis;
 
     public JwtService(
-            @Value("${jwt.secret}") String secret,
-            @Value("${jwt.expiration}") long expirationMillis) {
+            @Value("${jwt.secret}") String secret) {
         this.secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
-        this.expirationMillis = expirationMillis;
-    }
-
-    public String generateToken(String userId, String role) {
-        log.info("Generating token with role: {}", role);
-        return Jwts.builder()
-                .subject(userId)
-                .claim("role", role)
-                .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + expirationMillis))
-                .signWith(secretKey,  Jwts.SIG.HS256)
-                .compact();
-    }
-
-    public String extractUserId(String token) {
-        return getClaims(token).getSubject();
-    }
-
-    public String extractUserRole(String token) {
-        return getClaims(token).get("role", String.class);
-    }
-
-    public boolean isTokenExpired(String token) {
-        return getClaims(token).getExpiration().before(new Date());
     }
 
     public boolean isTokenValid(String token) {
