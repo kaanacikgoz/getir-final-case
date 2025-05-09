@@ -2,9 +2,8 @@ package com.acikgozkaan.book_service.service;
 
 import com.acikgozkaan.book_service.dto.BookRequest;
 import com.acikgozkaan.book_service.dto.BookResponse;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface BookService {
@@ -13,7 +12,7 @@ public interface BookService {
 
     BookResponse getById(UUID id);
 
-    Page<BookResponse> getAll(Pageable pageable);
+    List<BookResponse> getAll();
 
     BookResponse update(UUID id, BookRequest request);
 
