@@ -1,7 +1,6 @@
 package com.acikgozkaan.user_service.config;
 
 import com.acikgozkaan.user_service.security.jwt.JwtAuthFilter;
-import com.acikgozkaan.user_service.security.user.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
