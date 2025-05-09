@@ -1,8 +1,6 @@
 package com.acikgozkaan.book_service.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import lombok.*;
 
 import java.util.UUID;
@@ -29,8 +27,6 @@ public class Book {
     @Column(unique = true, nullable = false, length = 13)
     private String isbn;
 
-    @Min(1450)
-    @Max(2025)
     @Column(nullable = false)
     private int publicationYear;
 
@@ -38,7 +34,6 @@ public class Book {
     @Column(nullable = false)
     private Genre genre;
 
-    @Min(0)
     @Column(nullable = false)
     private int stock;
 }
