@@ -1,5 +1,6 @@
 package com.acikgozkaan.book_service.dto;
 
+import com.acikgozkaan.book_service.constant.BookConstants;
 import com.acikgozkaan.book_service.entity.Genre;
 import jakarta.validation.constraints.*;
 
@@ -14,11 +15,11 @@ public record BookRequest(
         String author,
 
         @NotBlank(message = "ISBN cannot be empty")
-        @Size(max = 13)
+        @Size(min=13, max = 13, message = "ISBN must be exactly 13 characters")
         String isbn,
 
-        @Min(value = 1450, message = "Publication year must be after 1450")
-        @Max(value = 2025, message = "Publication year cannot be in the future")
+        @Min(value = BookConstants.MIN_PUBLICATION_YEAR, message = "Publication year must be after 1450")
+        @Max(value = BookConstants.MAX_PUBLICATION_YEAR, message = "Publication year cannot be in the future")
         int publicationYear,
 
         @NotNull(message = "Genre must be specified")
