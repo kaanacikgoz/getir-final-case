@@ -57,9 +57,21 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } catch (ExpiredJwtException e) {
             log.warn("Expired JWT token: {}", e.getMessage());
+            sendResponse(response, HttpServletResponse.SC_UNAUTHORIZED, "Token expired");
         } catch (JwtException | IllegalArgumentException e) {
             log.warn("Invalid JWT: {}", e.getMessage());
+            sendResponse(response, HttpServletResponse.SC_UNAUTHORIZED, "Invalid token");
         }
+    }
+
+    private void sendResponse(HttpServletResponse response, int status, String message) throws IOException {
+        response.setStatus(status);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        String body = String.format("{\"status\": %d, \"message\": \"%s\"}", status, message);
+        response.getWriter().write(body);
+        response.getWriter().flush();
     }
 
 }
