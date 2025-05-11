@@ -1,4 +1,4 @@
-package com.acikgozkaan.book_service.security;
+package com.acikgozkaan.borrowing_service.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
-import java.util.Date;
 
 @Slf4j
 @Service

@@ -1,4 +1,4 @@
-package com.acikgozkaan.book_service.security;
+package com.acikgozkaan.borrowing_service.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
