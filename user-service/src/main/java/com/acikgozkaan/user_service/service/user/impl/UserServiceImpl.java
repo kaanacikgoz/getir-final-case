@@ -10,8 +10,6 @@ import com.acikgozkaan.user_service.mapper.UserMapper;
 import com.acikgozkaan.user_service.repository.UserRepository;
 import com.acikgozkaan.user_service.service.user.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
