@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class AuthServiceImplTest {
+class AuthServiceTest {
 
     private static final String EMAIL = "test@getir.com";
     private static final String PASSWORD = "123456";
