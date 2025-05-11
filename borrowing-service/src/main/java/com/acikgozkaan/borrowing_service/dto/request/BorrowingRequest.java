@@ -1,4 +1,4 @@
-package com.acikgozkaan.borrowing_service.dto;
+package com.acikgozkaan.borrowing_service.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 

@@ -1,4 +1,4 @@
-package com.acikgozkaan.borrowing_service.dto;
+package com.acikgozkaan.borrowing_service.dto.response;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -10,7 +10,5 @@ public record BorrowingResponse(
         UUID bookId,
         LocalDate borrowDate,
         LocalDate dueDate,
-        LocalDate returnDate,
-        boolean returned
-
+        LocalDate returnDate
 ) {}

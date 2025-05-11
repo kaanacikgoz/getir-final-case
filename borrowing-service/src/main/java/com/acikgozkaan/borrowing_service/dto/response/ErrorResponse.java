@@ -1,4 +1,4 @@
-package com.acikgozkaan.borrowing_service.dto;
+package com.acikgozkaan.borrowing_service.dto.response;
 
 import java.util.Map;
 
