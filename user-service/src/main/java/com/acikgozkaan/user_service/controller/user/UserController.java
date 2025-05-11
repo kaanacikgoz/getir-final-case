@@ -5,14 +5,12 @@ import com.acikgozkaan.user_service.dto.response.user.UserResponse;
 import com.acikgozkaan.user_service.service.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
-@Slf4j
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
@@ -30,6 +28,12 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
+    @GetMapping("/{id}/check")
+    public ResponseEntity<Void> checkUserExists(@PathVariable("id") UUID id) {
+        userService.checkExistenceById(id);
+        return ResponseEntity.ok().build();
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateUser(@PathVariable("id") UUID id,
                                            @RequestBody @Valid UpdateUserRequest request) {
@@ -40,7 +44,6 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") UUID id) {
         userService.deleteUser(id);
-        log.info("Deleting user: {}", id);
         return ResponseEntity.noContent().build();
     }
 

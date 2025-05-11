@@ -12,4 +12,5 @@ public interface UserService {
     List<UserResponse> getAllUsers();
     void updateUser(UUID id, UpdateUserRequest request);
     void deleteUser(UUID id);
+    void checkExistenceById(UUID id);
 }
