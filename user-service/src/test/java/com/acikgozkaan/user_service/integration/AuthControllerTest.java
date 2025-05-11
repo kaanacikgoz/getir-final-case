@@ -33,10 +33,15 @@ class AuthControllerTest {
     private static final String LIBRARIAN_PASSWORD = "123456";
 
     private RegisterRequest buildUniqueRequest() {
-        String uniqueId = UUID.randomUUID().toString().substring(0, 8);
-        String email = "user_" + uniqueId + "@getir.com";
-        String phone = "999" + uniqueId.replaceAll("[^0-9]", "1");
-        return new RegisterRequest(email, "123456", "Name", "Surname", phone, "Test Street");
+        String id = UUID.randomUUID().toString().substring(0, 8);
+        return new RegisterRequest(
+                "user_" + id + "@getir.com",
+                "123456",
+                "Name",
+                "Surname",
+                "999" + id.replaceAll("[^0-9]", "0"),
+                "Test Street"
+        );
     }
 
     private String obtainToken(String email, String password) throws Exception {
@@ -46,11 +51,12 @@ class AuthControllerTest {
         String response = mockMvc.perform(post(LOGIN_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
-                .andReturn()
-                .getResponse()
-                .getContentAsString();
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
 
-        return objectMapper.readTree(response).get("token").asText();
+        var tokenNode = objectMapper.readTree(response).get("token");
+        if (tokenNode == null) throw new RuntimeException("Token not found in response");
+        return tokenNode.asText();
     }
 
     @Test
@@ -128,12 +134,12 @@ class AuthControllerTest {
 
         String token = obtainToken(patron.email(), "123456");
 
-        RegisterRequest attempt = buildUniqueRequest();
+        RegisterRequest newLibrarian = buildUniqueRequest();
 
         mockMvc.perform(post(REGISTER_LIBRARIAN_URL)
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(attempt)))
+                        .content(objectMapper.writeValueAsString(newLibrarian)))
                 .andExpect(status().isUnauthorized());
     }
 
@@ -143,7 +149,8 @@ class AuthControllerTest {
         String token = obtainToken(LIBRARIAN_EMAIL, LIBRARIAN_PASSWORD);
 
         RegisterRequest invalid = new RegisterRequest(
-                "", "123456", "Name", "Surname", "12345678", "Street"
+                "", "123456", "Name",
+                "Surname", "12345678", "Street"
         );
 
         mockMvc.perform(post(REGISTER_LIBRARIAN_URL)
@@ -168,7 +175,8 @@ class AuthControllerTest {
                 .andExpect(status().isOk());
 
         RegisterRequest duplicate = new RegisterRequest(
-                request.email(), "123456", "Name", "Surname", "2020202020", "Test Street"
+                request.email(), "123456", "Name",
+                "Surname", "2020202020", "Test Street"
         );
 
         mockMvc.perform(post(REGISTER_URL)
@@ -210,7 +218,8 @@ class AuthControllerTest {
     @DisplayName("Should fail registration due to invalid email format")
     void shouldFailOnInvalidEmailFormat() throws Exception {
         RegisterRequest request = new RegisterRequest(
-                "invalid-email", "123456", "Name", "Surname", "6060606060", "Test Street");
+                "invalid-email", "123456", "Name",
+                "Surname", "6060606060", "Test Street");
 
         mockMvc.perform(post(REGISTER_URL)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -221,16 +230,18 @@ class AuthControllerTest {
     }
 
     @Test
-    @DisplayName("Should fail registration due to short password")
+    @DisplayName("Should return 400 when password is shorter than 6 characters")
     void shouldFailOnShortPassword() throws Exception {
         RegisterRequest request = new RegisterRequest(
-                "shortpass" + UUID.randomUUID() + "@getir.com", "123", "Name", "Surname", "7070707070", "Test Street");
+                "shortpass" + UUID.randomUUID() + "@getir.com", "123",
+                "Name", "Surname", "7070707070", "Test Street");
 
         mockMvc.perform(post(REGISTER_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpectAll(
                         status().isBadRequest(),
-                        jsonPath("$.fieldErrors.password").exists());
+                        jsonPath("$.fieldErrors.password").exists()
+                );
     }
 }
