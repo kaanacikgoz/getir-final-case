@@ -1,6 +1,7 @@
 package com.acikgozkaan.user_service.unit.mapper;
 
 import com.acikgozkaan.user_service.dto.request.auth.RegisterRequest;
+import com.acikgozkaan.user_service.dto.request.user.UpdateUserRequest;
 import com.acikgozkaan.user_service.dto.response.user.UserResponse;
 import com.acikgozkaan.user_service.entity.Role;
 import com.acikgozkaan.user_service.entity.User;
@@ -74,4 +75,38 @@ class UserMapperTest {
         assertThat(response.phone()).isEqualTo(PHONE);
         assertThat(response.address()).isEqualTo(ADDRESS);
     }
+
+    @Test
+    @DisplayName("Should update User fields from UpdateUserRequest")
+    void shouldUpdateUserFromUpdateRequest() {
+        User user = User.builder()
+                .email("old@getir.com")
+                .password("oldPass")
+                .name("OldName")
+                .surname("OldSurname")
+                .phone("0000000000")
+                .address("Old Address")
+                .build();
+
+        UpdateUserRequest updateRequest = new UpdateUserRequest(
+                EMAIL,
+                PASSWORD,
+                NAME,
+                SURNAME,
+                PHONE,
+                ADDRESS
+        );
+
+        Mockito.when(passwordEncoder.encode(PASSWORD)).thenReturn(ENCODED_PASSWORD);
+
+        userMapper.updateUserFromRequest(user, updateRequest);
+
+        assertThat(user.getEmail()).isEqualTo(EMAIL);
+        assertThat(user.getPassword()).isEqualTo(ENCODED_PASSWORD);
+        assertThat(user.getName()).isEqualTo(NAME);
+        assertThat(user.getSurname()).isEqualTo(SURNAME);
+        assertThat(user.getPhone()).isEqualTo(PHONE);
+        assertThat(user.getAddress()).isEqualTo(ADDRESS);
+    }
+
 }

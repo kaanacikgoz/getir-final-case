@@ -24,8 +24,8 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
@@ -99,12 +99,35 @@ class UserServiceTest {
         when(userRepository.existsByEmailAndIdNot(updateRequest.email(), userId)).thenReturn(false);
         when(userRepository.existsByPhoneAndIdNot(updateRequest.phone(), userId)).thenReturn(false);
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
-        when(passwordEncoder.encode(updateRequest.password())).thenReturn("encoded");
+        when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        userService.updateUser(userId, updateRequest);
+        doAnswer(invocation -> {
+            User u = invocation.getArgument(0);
+            UpdateUserRequest r = invocation.getArgument(1);
+            u.setEmail(r.email());
+            u.setPassword("encoded");
+            u.setName(r.name());
+            u.setSurname(r.surname());
+            u.setPhone(r.phone());
+            u.setAddress(r.address());
+            return null;
+        }).when(userMapper).updateUserFromRequest(any(User.class), any(UpdateUserRequest.class));
 
-        assertThat(user.getEmail()).isEqualTo(updateRequest.email());
-        assertThat(user.getPassword()).isEqualTo("encoded");
+        when(userMapper.toUserResponse(user)).thenReturn(new UserResponse(
+                user.getId(),
+                updateRequest.email(),
+                updateRequest.name(),
+                updateRequest.surname(),
+                updateRequest.phone(),
+                updateRequest.address()
+        ));
+
+        UserResponse response = userService.updateUser(userId, updateRequest);
+
+        assertThat(response.email()).isEqualTo(updateRequest.email());
+        assertThat(response.name()).isEqualTo(updateRequest.name());
+        assertThat(response.phone()).isEqualTo(updateRequest.phone());
+
         verify(userRepository).save(user);
     }
 
