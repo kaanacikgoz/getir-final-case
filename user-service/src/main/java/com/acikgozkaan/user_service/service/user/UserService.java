@@ -10,7 +10,7 @@ public interface UserService {
 
     UserResponse getUserById(UUID id);
     List<UserResponse> getAllUsers();
-    void updateUser(UUID id, UpdateUserRequest request);
+    UserResponse updateUser(UUID id, UpdateUserRequest request);
     void deleteUser(UUID id);
     void checkExistenceById(UUID id);
 }

@@ -38,18 +38,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(UUID id, UpdateUserRequest request) {
+    public UserResponse updateUser(UUID id, UpdateUserRequest request) {
         validateEmailAndPhoneUniqueness(id, request.email(), request.phone());
 
         User user = findUserById(id);
-        user.setEmail(request.email());
-        user.setPassword(passwordEncoder.encode(request.password()));
-        user.setName(request.name());
-        user.setSurname(request.surname());
-        user.setPhone(request.phone());
-        user.setAddress(request.address());
+        userMapper.updateUserFromRequest(user, request);
+        User updated = userRepository.save(user);
 
-        userRepository.save(user);
+        return userMapper.toUserResponse(updated);
     }
 
     @Override
