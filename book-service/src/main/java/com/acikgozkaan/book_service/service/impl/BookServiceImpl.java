@@ -5,10 +5,14 @@ import com.acikgozkaan.book_service.dto.BookResponse;
 import com.acikgozkaan.book_service.entity.Book;
 import com.acikgozkaan.book_service.exception.BookNotFoundException;
 import com.acikgozkaan.book_service.exception.IsbnAlreadyExistsException;
+import com.acikgozkaan.book_service.exception.OutOfStockException;
 import com.acikgozkaan.book_service.mapper.BookMapper;
 import com.acikgozkaan.book_service.repository.BookRepository;
 import com.acikgozkaan.book_service.service.BookService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,6 +45,12 @@ public class BookServiceImpl implements BookService {
                 .toList();
     }
 
+    public Page<BookResponse> searchBooks(String title, String author, String isbn, String genre, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return bookRepository.searchWithFilters(title, author, isbn, genre, pageable)
+                .map(bookMapper::toResponse);
+    }
+
     @Override
     public BookResponse update(UUID id, BookRequest request) {
         validateIsbnUniquenessOnUpdate(request.isbn(), id);
@@ -53,6 +63,25 @@ public class BookServiceImpl implements BookService {
     public void delete(UUID id) {
         Book book = findBookById(id);
         bookRepository.delete(book);
+    }
+
+    @Override
+    public void decreaseStock(UUID id) {
+        Book book = findBookById(id);
+
+        if (book.getStock() <= 0) {
+            throw new OutOfStockException(id);
+        }
+
+        book.setStock(book.getStock() - 1);
+        bookRepository.save(book);
+    }
+
+    @Override
+    public void increaseStock(UUID id) {
+        Book book = findBookById(id);
+        book.setStock(book.getStock() + 1);
+        bookRepository.save(book);
     }
 
     private Book findBookById(UUID id) {

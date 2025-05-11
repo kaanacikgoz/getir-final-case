@@ -28,8 +28,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/v3/api-docs/**",
-                                "/swagger-ui/**"
-                                ).permitAll()
+                                "/swagger-ui/**")
+                                .permitAll()
+
+                        .requestMatchers(
+                                "/api/v1/books/{id}/decrease-stock",
+                                "/api/v1/books/{id}/increase-stock")
+                        .hasRole("PATRON")
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

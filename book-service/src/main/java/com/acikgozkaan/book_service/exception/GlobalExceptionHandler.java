@@ -20,31 +20,49 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BookNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleBookNotFound(BookNotFoundException ex) {
+        log.warn("Book not found: {}", ex.getMessage());
         return buildResponse(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(IsbnAlreadyExistsException.class)
     public ResponseEntity<ErrorResponse> handleIsbnAlreadyExists(IsbnAlreadyExistsException ex) {
+        log.warn("Duplicate ISBN: {}", ex.getMessage());
+        return buildResponse(ex.getMessage(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(OutOfStockException.class)
+    public ResponseEntity<ErrorResponse> handleOutOfStock(OutOfStockException ex) {
+        log.warn("Out of stock: {}", ex.getMessage());
         return buildResponse(ex.getMessage(), HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(AuthorizationDeniedException.class)
     public ResponseEntity<ErrorResponse> handleAuth(AuthorizationDeniedException ex) {
-        return buildResponse(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+        log.warn("Authorization denied: {}", ex.getMessage());
+        return buildResponse("You are not authorized to perform this action", HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorResponse> handleMissingRequestBody(HttpMessageNotReadableException ex) {
-        return buildResponse("Required request body is missing", HttpStatus.BAD_REQUEST);
+        log.warn("Missing or malformed request body: {}", ex.getMessage());
+        return buildResponse("Required request body is missing or invalid", HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalArgument(IllegalArgumentException ex) {
+        log.warn("Illegal Argument: {}", ex.getMessage());
+        return buildResponse("Argument type is missing or invalid", HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidationErrors(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
-            errors.put(fieldError.getField(), fieldError.getDefaultMessage());
+        Map<String, String> fieldErrors = new HashMap<>();
+        for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+            fieldErrors.put(error.getField(), error.getDefaultMessage());
         }
-        return buildResponse("Validation failed", HttpStatus.BAD_REQUEST, errors);
+
+        log.warn("Validation failed: {}", fieldErrors);
+        return buildResponse("Validation failed", HttpStatus.BAD_REQUEST, fieldErrors);
     }
 
     @ExceptionHandler(Exception.class)
@@ -54,10 +72,11 @@ public class GlobalExceptionHandler {
     }
 
     private ResponseEntity<ErrorResponse> buildResponse(String message, HttpStatus status) {
-        return new ResponseEntity<>(new ErrorResponse(message, status.value(), null), status);
+        return buildResponse(message, status, null);
     }
 
     private ResponseEntity<ErrorResponse> buildResponse(String message, HttpStatus status, Map<String, String> fieldErrors) {
-        return new ResponseEntity<>(new ErrorResponse(message, status.value(), fieldErrors), status);
+        return ResponseEntity.status(status)
+                .body(new ErrorResponse(message, status.value(), fieldErrors));
     }
 }
