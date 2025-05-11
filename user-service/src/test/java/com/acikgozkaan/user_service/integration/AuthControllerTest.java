@@ -1,4 +1,4 @@
-package com.acikgozkaan.user_service.integration.controller;
+package com.acikgozkaan.user_service.integration;
 
 import com.acikgozkaan.user_service.dto.request.auth.LoginRequest;
 import com.acikgozkaan.user_service.dto.request.auth.RegisterRequest;
