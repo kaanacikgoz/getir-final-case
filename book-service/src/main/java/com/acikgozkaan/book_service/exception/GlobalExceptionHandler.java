@@ -10,9 +10,11 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Slf4j
 @RestControllerAdvice
@@ -54,6 +56,19 @@ public class GlobalExceptionHandler {
         return buildResponse("Argument type is missing or invalid", HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ErrorResponse> handleTypeMismatch(MethodArgumentTypeMismatchException ex) {
+        log.warn("Type mismatch: {}", ex.getMessage());
+
+        if (ex.getRequiredType() != null && ex.getRequiredType().equals(UUID.class)) {
+            Map<String, String> error = Map.of(ex.getName(), "Invalid UUID format: " + ex.getValue());
+            return buildResponse("Validation failed", HttpStatus.BAD_REQUEST, error);
+        }
+
+        Map<String, String> error = Map.of(ex.getName(), "Invalid type: " + ex.getValue());
+        return buildResponse("Type mismatch error", HttpStatus.BAD_REQUEST, error);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidationErrors(MethodArgumentNotValidException ex) {
         Map<String, String> fieldErrors = new HashMap<>();
@@ -72,7 +87,7 @@ public class GlobalExceptionHandler {
     }
 
     private ResponseEntity<ErrorResponse> buildResponse(String message, HttpStatus status) {
-        return buildResponse(message, status, null);
+        return buildResponse(message, status, Map.of());
     }
 
     private ResponseEntity<ErrorResponse> buildResponse(String message, HttpStatus status, Map<String, String> fieldErrors) {
