@@ -1,8 +1,10 @@
 package com.acikgozkaan.book_service.service.impl;
 
+import com.acikgozkaan.book_service.config.BookSpecifications;
 import com.acikgozkaan.book_service.dto.BookRequest;
 import com.acikgozkaan.book_service.dto.BookResponse;
 import com.acikgozkaan.book_service.entity.Book;
+import com.acikgozkaan.book_service.entity.Genre;
 import com.acikgozkaan.book_service.exception.BookNotFoundException;
 import com.acikgozkaan.book_service.exception.IsbnAlreadyExistsException;
 import com.acikgozkaan.book_service.exception.OutOfStockException;
@@ -11,8 +13,8 @@ import com.acikgozkaan.book_service.repository.BookRepository;
 import com.acikgozkaan.book_service.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,9 +47,15 @@ public class BookServiceImpl implements BookService {
                 .toList();
     }
 
-    public Page<BookResponse> searchBooks(String title, String author, String isbn, String genre, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return bookRepository.searchWithFilters(title, author, isbn, genre, pageable)
+    @Override
+    public Page<BookResponse> searchBooks(String title, String author, String isbn, Genre genre, Pageable pageable) {
+        Specification<Book> spec = Specification
+                .where(BookSpecifications.withTitle(title))
+                .and(BookSpecifications.withAuthor(author))
+                .and(BookSpecifications.withIsbn(isbn))
+                .and(BookSpecifications.withGenre(genre));
+
+        return bookRepository.findAll(spec, pageable)
                 .map(bookMapper::toResponse);
     }
 

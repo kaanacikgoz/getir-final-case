@@ -2,9 +2,13 @@ package com.acikgozkaan.book_service.controller;
 
 import com.acikgozkaan.book_service.dto.BookRequest;
 import com.acikgozkaan.book_service.dto.BookResponse;
+import com.acikgozkaan.book_service.entity.Genre;
 import com.acikgozkaan.book_service.service.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +39,18 @@ public class BookController {
     @PreAuthorize("hasAnyRole('LIBRARIAN', 'PATRON')")
     public ResponseEntity<BookResponse> getBookById(@PathVariable("id") UUID id) {
         return ResponseEntity.ok(bookService.getById(id));
+    }
+
+    @GetMapping("/search")
+    @PreAuthorize("hasAnyRole('LIBRARIAN', 'PATRON')")
+    public Page<BookResponse> searchBooks(
+            @RequestParam(name = "title", required = false) String title,
+            @RequestParam(name = "author", required = false) String author,
+            @RequestParam(name = "isbn", required = false) String isbn,
+            @RequestParam(name = "genre", required = false) Genre genre,
+            @PageableDefault(size = 5, page = 0) Pageable pageable) {
+
+        return bookService.searchBooks(title, author, isbn, genre, pageable);
     }
 
     @PutMapping("/{id}")
