@@ -1,7 +1,7 @@
 package com.acikgozkaan.book_service.config;
 
 import com.acikgozkaan.book_service.security.JwtAuthFilter;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -13,10 +13,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableMethodSecurity
-@RequiredArgsConstructor
 public class SecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
+
+    public SecurityConfig(@Autowired(required = false) JwtAuthFilter jwtAuthFilter) {
+        this.jwtAuthFilter = jwtAuthFilter;
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -28,8 +31,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/v3/api-docs/**",
-                                "/swagger-ui/**")
-                                .permitAll()
+                                "/swagger-ui/**"
+                        )
+                        .permitAll()
 
                         .requestMatchers(
                                 "/api/v1/books/{id}/decrease-stock",
@@ -37,8 +41,11 @@ public class SecurityConfig {
                         .hasRole("PATRON")
 
                         .anyRequest().authenticated()
-                )
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                );
+
+        if (jwtAuthFilter != null) {
+            http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        }
 
         return http.build();
     }

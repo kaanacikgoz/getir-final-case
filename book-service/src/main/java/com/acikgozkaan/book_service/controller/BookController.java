@@ -48,7 +48,7 @@ public class BookController {
             @RequestParam(name = "author", required = false) String author,
             @RequestParam(name = "isbn", required = false) String isbn,
             @RequestParam(name = "genre", required = false) Genre genre,
-            @PageableDefault(size = 5, page = 0) Pageable pageable) {
+            Pageable pageable) {
 
         return bookService.searchBooks(title, author, isbn, genre, pageable);
     }
