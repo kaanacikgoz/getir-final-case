@@ -1,8 +1,10 @@
 package com.acikgozkaan.book_service.service.impl;
 
 import com.acikgozkaan.book_service.config.BookSpecifications;
-import com.acikgozkaan.book_service.dto.BookRequest;
-import com.acikgozkaan.book_service.dto.BookResponse;
+import com.acikgozkaan.book_service.config.StockUpdatePublisher;
+import com.acikgozkaan.book_service.dto.request.BookRequest;
+import com.acikgozkaan.book_service.dto.response.BookResponse;
+import com.acikgozkaan.book_service.dto.BookStockEvent;
 import com.acikgozkaan.book_service.entity.Book;
 import com.acikgozkaan.book_service.entity.Genre;
 import com.acikgozkaan.book_service.exception.BookNotFoundException;
@@ -26,6 +28,7 @@ public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
+    private final StockUpdatePublisher stockUpdatePublisher;
 
     @Override
     public BookResponse create(BookRequest request) {
@@ -83,6 +86,10 @@ public class BookServiceImpl implements BookService {
 
         book.setStock(book.getStock() - 1);
         bookRepository.save(book);
+
+        stockUpdatePublisher.publish(
+                new BookStockEvent(book.getId(), book.getTitle(), book.getStock())
+        );
     }
 
     @Override
@@ -90,6 +97,10 @@ public class BookServiceImpl implements BookService {
         Book book = findBookById(id);
         book.setStock(book.getStock() + 1);
         bookRepository.save(book);
+
+        stockUpdatePublisher.publish(
+                new BookStockEvent(book.getId(), book.getTitle(), book.getStock())
+        );
     }
 
     private Book findBookById(UUID id) {

@@ -1,16 +1,20 @@
 package com.acikgozkaan.book_service.controller;
 
-import com.acikgozkaan.book_service.dto.BookRequest;
-import com.acikgozkaan.book_service.dto.BookResponse;
+import com.acikgozkaan.book_service.config.StockUpdatePublisher;
+import com.acikgozkaan.book_service.dto.request.BookRequest;
+import com.acikgozkaan.book_service.dto.response.BookResponse;
+import com.acikgozkaan.book_service.dto.BookStockEvent;
 import com.acikgozkaan.book_service.entity.Genre;
 import com.acikgozkaan.book_service.service.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,6 +25,7 @@ import java.util.UUID;
 public class BookController {
 
     private final BookService bookService;
+    private final StockUpdatePublisher publisher;
 
     @PostMapping
     @PreAuthorize("hasRole('LIBRARIAN')")
@@ -77,6 +82,11 @@ public class BookController {
     public ResponseEntity<Void> increaseStock(@PathVariable("id") UUID id) {
         bookService.increaseStock(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/stream/stock", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<BookStockEvent> streamBookStock() {
+        return publisher.getStream();
     }
 
 }
