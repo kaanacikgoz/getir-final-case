@@ -1,4 +1,4 @@
-package com.acikgozkaan.book_service.dto;
+package com.acikgozkaan.book_service.dto.request;
 
 import com.acikgozkaan.book_service.constant.BookConstants;
 import com.acikgozkaan.book_service.entity.Genre;

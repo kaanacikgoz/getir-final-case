@@ -1,7 +1,7 @@
 package com.acikgozkaan.book_service.mapper;
 
-import com.acikgozkaan.book_service.dto.BookRequest;
-import com.acikgozkaan.book_service.dto.BookResponse;
+import com.acikgozkaan.book_service.dto.request.BookRequest;
+import com.acikgozkaan.book_service.dto.response.BookResponse;
 import com.acikgozkaan.book_service.entity.Book;
 import org.springframework.stereotype.Component;
 

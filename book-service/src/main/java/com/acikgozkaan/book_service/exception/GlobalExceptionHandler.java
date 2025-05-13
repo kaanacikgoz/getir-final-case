@@ -1,6 +1,6 @@
 package com.acikgozkaan.book_service.exception;
 
-import com.acikgozkaan.book_service.dto.ErrorResponse;
+import com.acikgozkaan.book_service.dto.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

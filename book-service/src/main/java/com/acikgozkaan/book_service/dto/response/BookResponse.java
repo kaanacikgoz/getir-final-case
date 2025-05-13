@@ -1,4 +1,4 @@
-package com.acikgozkaan.book_service.dto;
+package com.acikgozkaan.book_service.dto.response;
 
 import com.acikgozkaan.book_service.entity.Genre;
 
