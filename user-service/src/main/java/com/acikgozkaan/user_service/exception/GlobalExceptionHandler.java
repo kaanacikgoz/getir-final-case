@@ -4,6 +4,7 @@ import com.acikgozkaan.user_service.dto.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -49,6 +50,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleValidationException(ValidationException ex) {
         log.warn("Custom validation failed: {}", ex.getMessage());
         return buildResponse(ex.getMessage(), HttpStatus.CONFLICT, ex.getFieldErrors());
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> handleMissingRequestBody(HttpMessageNotReadableException ex) {
+        log.warn("Missing or invalid request body: {}", ex.getMessage());
+        return buildResponse("Request body is missing or invalid", HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(AuthorizationDeniedException.class)

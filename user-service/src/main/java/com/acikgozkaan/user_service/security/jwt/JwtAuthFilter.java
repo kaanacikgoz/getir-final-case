@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.time.Instant;
 import java.util.Collections;
 
 @Slf4j
@@ -57,19 +56,19 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } catch (ExpiredJwtException e) {
             log.warn("Expired JWT token: {}", e.getMessage());
-            sendResponse(response, HttpServletResponse.SC_UNAUTHORIZED, "Token expired");
+            sendResponse(response, "Token expired");
         } catch (JwtException | IllegalArgumentException e) {
             log.warn("Invalid JWT: {}", e.getMessage());
-            sendResponse(response, HttpServletResponse.SC_UNAUTHORIZED, "Invalid token");
+            sendResponse(response, "Invalid token");
         }
     }
 
-    private void sendResponse(HttpServletResponse response, int status, String message) throws IOException {
-        response.setStatus(status);
+    private void sendResponse(HttpServletResponse response, String message) throws IOException {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
-        String body = String.format("{\"status\": %d, \"message\": \"%s\"}", status, message);
+        String body = String.format("{\"status\": %d, \"message\": \"%s\"}", HttpServletResponse.SC_UNAUTHORIZED, message);
         response.getWriter().write(body);
         response.getWriter().flush();
     }

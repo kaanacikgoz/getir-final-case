@@ -11,10 +11,12 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -30,6 +32,19 @@ public class GlobalExceptionHandler {
         HttpStatus status = resolveStatus(ex);
         log.warn("Handled custom exception: {}", ex.getMessage());
         return buildResponse(ex.getMessage(), status);
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ErrorResponse> handleTypeMismatch(MethodArgumentTypeMismatchException ex) {
+        log.warn("Type mismatch: {}", ex.getMessage());
+
+        if (ex.getRequiredType() != null && ex.getRequiredType().equals(UUID.class)) {
+            Map<String, String> error = Map.of(ex.getName(), "Invalid UUID format: " + ex.getValue());
+            return buildResponse("Validation failed", HttpStatus.BAD_REQUEST, error);
+        }
+
+        Map<String, String> error = Map.of(ex.getName(), "Invalid type: " + ex.getValue());
+        return buildResponse("Type mismatch error", HttpStatus.BAD_REQUEST, error);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

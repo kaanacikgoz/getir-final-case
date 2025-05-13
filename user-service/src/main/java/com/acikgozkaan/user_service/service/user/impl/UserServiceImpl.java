@@ -10,7 +10,6 @@ import com.acikgozkaan.user_service.mapper.UserMapper;
 import com.acikgozkaan.user_service.repository.UserRepository;
 import com.acikgozkaan.user_service.service.user.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +21,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserResponse getUserById(UUID id) {

@@ -9,16 +9,10 @@ import java.util.UUID;
 public interface BorrowingService {
 
     BorrowingResponse borrowBook(BorrowingRequest request);
-
     BorrowingResponse returnBook(UUID borrowingId);
-
     List<BorrowingResponse> getAll();
-
     BorrowingResponse getById(UUID id);
-
     List<BorrowingResponse> getByUserId(UUID userId);
-
     List<BorrowingResponse> getOverdueBorrowings();
-
     String generateOverdueReport();
 }
