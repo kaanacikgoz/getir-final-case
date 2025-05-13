@@ -1,0 +1,107 @@
+services:
+  discovery-server:
+    build: ./discovery-server
+    ports:
+      - "8761:8761"
+    networks:
+      - app-network
+
+  postgres-user:
+    image: postgres:15
+    container_name: postgres-user
+    environment:
+      POSTGRES_DB: userdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - user_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  postgres-book:
+    image: postgres:15
+    container_name: postgres-book
+    environment:
+      POSTGRES_DB: bookdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5434:5432"
+    volumes:
+      - book_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  postgres-borrowing:
+    image: postgres:15
+    container_name: postgres-borrowing
+    environment:
+      POSTGRES_DB: borrowingdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5435:5432"
+    volumes:
+      - borrowing_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  user-service:
+    build: ./user-service
+    depends_on:
+      - postgres-user
+      - discovery-server
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - JWT_SECRET=19c9d9b02cd1af79106d6e0286d3a8c0b8fdb90772afc31736ef5a31d64aab74
+    networks:
+      - app-network
+
+  book-service:
+    build: ./book-service
+    depends_on:
+      - postgres-book
+      - discovery-server
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - JWT_SECRET=19c9d9b02cd1af79106d6e0286d3a8c0b8fdb90772afc31736ef5a31d64aab74
+    networks:
+      - app-network
+
+  borrowing-service:
+    build: ./borrowing-service
+    depends_on:
+      - postgres-borrowing
+      - discovery-server
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - JWT_SECRET=19c9d9b02cd1af79106d6e0286d3a8c0b8fdb90772afc31736ef5a31d64aab74
+    networks:
+      - app-network
+
+  api-gateway:
+    build: ./api-gateway
+    depends_on:
+      - discovery-server
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - app-network
+
+networks:
+  app-network:
+
+volumes:
+  user_data:
+  book_data:
+  borrowing_data:
