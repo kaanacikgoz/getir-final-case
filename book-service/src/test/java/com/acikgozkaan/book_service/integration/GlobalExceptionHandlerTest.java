@@ -1,6 +1,6 @@
 package com.acikgozkaan.book_service.integration;
 
-import com.acikgozkaan.book_service.dto.BookRequest;
+import com.acikgozkaan.book_service.dto.request.BookRequest;
 import com.acikgozkaan.book_service.entity.Genre;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;

@@ -1,7 +1,8 @@
 package com.acikgozkaan.book_service.unit;
 
-import com.acikgozkaan.book_service.dto.BookRequest;
-import com.acikgozkaan.book_service.dto.BookResponse;
+import com.acikgozkaan.book_service.config.StockUpdatePublisher;
+import com.acikgozkaan.book_service.dto.request.BookRequest;
+import com.acikgozkaan.book_service.dto.response.BookResponse;
 import com.acikgozkaan.book_service.entity.Book;
 import com.acikgozkaan.book_service.entity.Genre;
 import com.acikgozkaan.book_service.exception.BookNotFoundException;
@@ -42,6 +43,9 @@ public class BookServiceTest {
 
     @Mock
     private BookMapper bookMapper;
+
+    @Mock
+    private StockUpdatePublisher stockUpdatePublisher;
 
     private Book book;
     private BookRequest request;
@@ -212,6 +216,7 @@ public class BookServiceTest {
 
         assertThat(book.getStock()).isEqualTo(2);
         verify(bookRepository).save(book);
+        verify(stockUpdatePublisher).publish(any());
     }
 
     @Test
@@ -244,6 +249,7 @@ public class BookServiceTest {
 
         assertThat(book.getStock()).isEqualTo(3);
         verify(bookRepository).save(book);
+        verify(stockUpdatePublisher).publish(any());
     }
 
     @Test
