@@ -6,9 +6,9 @@ spring:
     name: user-service
 
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/userdb
+    username: postgres
+    password: database
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -26,5 +26,5 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
 
 jwt:
-  secret: ${JWT_SECRET}
+  secret: 19c9d9b02cd1af79106d6e0286d3a8c0b8fdb90772afc31736ef5a31d64aab74
   expiration: 3600000

@@ -1,6 +1,7 @@
 package com.acikgozkaan.borrowing_service.exception;
 
 import com.acikgozkaan.borrowing_service.dto.response.ErrorResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -75,8 +76,17 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(FeignException.class)
     public ResponseEntity<ErrorResponse> handleFeign(FeignException ex) {
-        log.error("Unhandled exception occurred", ex);
-        return buildResponse("Internal server error: " + ex.getMessage(), HttpStatus.valueOf(ex.status()));
+        log.warn("Feign error: {}", ex.getMessage());
+
+        try {
+            String json = ex.contentUTF8();
+            ObjectMapper objectMapper = new ObjectMapper();
+            ErrorResponse error = objectMapper.readValue(json, ErrorResponse.class);
+            return buildResponse(error.message(), HttpStatus.valueOf(error.statusCode()), error.fieldErrors());
+        } catch (Exception e) {
+            log.error("Failed to parse Feign error body", e);
+            return buildResponse("Service call failed", HttpStatus.valueOf(ex.status()));
+        }
     }
 
     @ExceptionHandler(ResponseStatusException.class)

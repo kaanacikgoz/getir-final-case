@@ -109,15 +109,36 @@ class GlobalExceptionHandlerTest {
     }
 
     @Test
-    void shouldHandleFeignException() {
+    void shouldHandleFeignExceptionWithValidJsonBody() {
+        String json = """
+        {
+          "message": "User not found with ID: test-id",
+          "statusCode": 404,
+          "fieldErrors": {}
+        }
+        """;
+
+        FeignException feignEx = mock(FeignException.class);
+        when(feignEx.status()).thenReturn(404);
+        when(feignEx.contentUTF8()).thenReturn(json);
+
+        ResponseEntity<ErrorResponse> response = handler.handleFeign(feignEx);
+
+        assertEquals(404, response.getStatusCode().value());
+        assertEquals("User not found with ID: test-id", response.getBody().message());
+        assertTrue(response.getBody().fieldErrors().isEmpty());
+    }
+
+    @Test
+    void shouldHandleFeignExceptionWithInvalidJsonBody() {
         FeignException feignEx = mock(FeignException.class);
         when(feignEx.status()).thenReturn(503);
-        when(feignEx.getMessage()).thenReturn("Service unavailable");
+        when(feignEx.contentUTF8()).thenReturn("not a json");
 
         ResponseEntity<ErrorResponse> response = handler.handleFeign(feignEx);
 
         assertEquals(503, response.getStatusCode().value());
-        assertTrue(Objects.requireNonNull(response.getBody()).message().contains("Service unavailable"));
+        assertEquals("Service call failed", response.getBody().message());
     }
 
     @Test
