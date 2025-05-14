@@ -1,0 +1,3016 @@
+{
+	"info": {
+		"_postman_id": "b249f5bc-cbcc-488f-81c6-4810c497a108",
+		"name": "Getir-final-case",
+		"description": "### 📘 Welcome to Getir Final Case API\n\nThis documentation describes all available endpoints for the Library Management System.  \nYou’ll find endpoints for:\n\n- 📚 Book Management (CRUD + real-time stock stream)\n    \n- 👤 User Management (CRUD)\n    \n- 🔐 Authentication (JWT-based login/register)\n    \n- 📖 Borrowing Workflow (borrow/return books, view overdue)\n    \n\n#### 🔑 Authorization\n\nMost endpoints require a **Bearer Token** (JWT). Use the `/auth/login` endpoint to obtain it.\n\n#### 📁 Folder Overview\n\n- `auth`: Handles login and registration\n    \n- `user-crud`: User management\n    \n- `book-crud`: Manage books and real-time updates\n    \n- `borrowing`: Borrow & return flow, overdue tracking\n    \n\nHappy Testing!",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36979805"
+	},
+	"item": [
+		{
+			"name": "user-crud",
+			"item": [
+				{
+					"name": "getUsers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyN2Y0NWFmMS02ZTU4LTQxNGEtOGE3Ny00OGUyNDJiYThhMjciLCJyb2xlIjoiTElCUkFSSUFOIiwiaWF0IjoxNzQ3MTY4NTg3LCJleHAiOjE3NDcxNzIxODd9.YWTqW2Earwdq7X0raVAFN-vERT9I0dYoQqWBMKxyQSg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						},
+						"description": "Retrieves a list of all registered users in the system.\n\n**Access Control:**\n\n- Requires a valid **JWT token**\n    \n- Only accessible by users with the role **LIBRARIAN**\n    \n\n**Responses:**\n\n- **`200 OK`**: Returns an array of user objects\n    \n- **`401 Unauthorized`**: If JWT is missing or invalid\n    \n- **`403 Forbidden`**: If the requester is not a LIBRARIAN"
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/v1/users",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:10:25 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"ab89b1bc-ff4a-49b4-a438-51767274d834\",\n        \"email\": \"admin@getir.com\",\n        \"name\": \"Admin\",\n        \"surname\": \"User\",\n        \"phone\": \"123123\",\n        \"address\": \"Default Library Address\"\n    },\n    {\n        \"id\": \"eb366515-0cdd-4760-ba0b-b466148a6a47\",\n        \"email\": \"kaan2@getir.com\",\n        \"name\": \"Kaan\",\n        \"surname\": \"Açıkgöz\",\n        \"phone\": \"1234567802\",\n        \"address\": \"Manisa\"\n    },\n    {\n        \"id\": \"c711869e-2d82-4ea2-9a21-2eb57820ac87\",\n        \"email\": \"kaan3@getir.com\",\n        \"name\": \"Kaan\",\n        \"surname\": \"Açıkgöz\",\n        \"phone\": \"1234567803\",\n        \"address\": \"Manisa\"\n    },\n    {\n        \"id\": \"8bf4bf27-7e09-43ac-b0af-d8ad165494e5\",\n        \"email\": \"kaan@getir.com\",\n        \"name\": \"Kaan\",\n        \"surname\": \"Açıkgöz\",\n        \"phone\": \"1234567801\",\n        \"address\": \"İzmir\"\n    },\n    {\n        \"id\": \"2025b416-92c5-4716-b4f3-30671f668fbf\",\n        \"email\": \"kaan5@getir.com\",\n        \"name\": \"Kaan\",\n        \"surname\": \"Açıkgöz\",\n        \"phone\": \"1234567804\",\n        \"address\": \"Manisa\"\n    },\n    {\n        \"id\": \"27f45af1-6e58-414a-8a77-48e242ba8a27\",\n        \"email\": \"admin5@getir.com\",\n        \"name\": \"Kaan\",\n        \"surname\": \"Açıkgöz\",\n        \"phone\": \"+905551112240\",\n        \"address\": \"İstanbul\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "deleteUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiMTg0ODhiMi0zNzQ1LTQ0OGQtYWMzNi1mYzdiNzI2ODRjYmQiLCJpYXQiOjE3NDYzMTI2OTYsImV4cCI6MTc0NjMxNDQ5NiwiZW1haWwiOiJhZG1pbkBnZXRpci5jb20iLCJyb2xlIjoiTElCUkFSSUFOIn0.0RtvKrxRcQB02zs__l1-PTPjgW96CyssvJfNwT9BVys",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/users/1ec414cd-dc0e-4f95-9119-10a6d4831d8c",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"1ec414cd-dc0e-4f95-9119-10a6d4831d8c"
+							]
+						},
+						"description": "Deletes a user account by their unique ID.\n\n**Access Control:**\n\n- Requires a valid **JWT token**\n    \n- Allowed only for users with the **LIBRARIAN** role\n    \n\n**Path Parameter:**\n\n- `id` (UUID): The ID of the user to delete\n    \n\n**Responses:**\n\n- **`204 No Content`**: Successfully deleted the user\n    \n- **`401 Unauthorized`**: If the JWT token is missing or invalid\n    \n- **`403 Forbidden`**: If the requester does not have the LIBRARIAN role\n    \n- **`404 Not Found`**: No user found with the provided ID"
+					},
+					"response": [
+						{
+							"name": "204",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/v1/users/2025b416-92c5-4716-b4f3-30671f668fbf",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"2025b416-92c5-4716-b4f3-30671f668fbf"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:11:25 GMT"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "404",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/v1/users/917fff76-59f5-4a34-a0d6-eb892c9659a5",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"917fff76-59f5-4a34-a0d6-eb892c9659a5"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:10:57 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User not found with ID: 917fff76-59f5-4a34-a0d6-eb892c9659a5\",\n    \"statusCode\": 404,\n    \"fieldErrors\": {}\n}"
+						}
+					]
+				},
+				{
+					"name": "updateUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYjg5YjFiYy1mZjRhLTQ5YjQtYTQzOC01MTc2NzI3NGQ4MzQiLCJyb2xlIjoiTElCUkFSSUFOIiwiaWF0IjoxNzQ3MTY0ODM5LCJleHAiOjE3NDcxNjg0Mzl9.ScmK_o1E9DYAKOFs2LrpNaKPDWVbG5YNorOUtDwW52I",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"8bf4bf27-7e09-43ac-b0af-d8ad165494e5\",\n    \"email\": \"kaan@getir.com\",\n    \"password\": \"123123\",\n    \"name\": \"Kaan\",\n    \"surname\": \"Açıkgöz\",\n    \"phone\": \"1234567801\",\n    \"address\": \"İzmir\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/users/8bf4bf27-7e09-43ac-b0af-d8ad165494e5",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"8bf4bf27-7e09-43ac-b0af-d8ad165494e5"
+							]
+						},
+						"description": "Updates the details of an existing user.\n\n**Access Control:**\n\n- Requires a valid **JWT token**\n    \n- Allowed only for users with the **LIBRARIAN** role\n    \n\n**Path Parameter:**\n\n- `id` (UUID): ID of the user to update\n    \n\n**Constraints:**\n\n- `email` and `phone` must be unique\n    \n- All fields are required except `address` (optional)\n    \n\n**Responses:**\n\n- **`200 OK`**: User updated successfully\n    \n- **`400 Bad Request`**: Invalid or missing fields\n    \n- **`401 Unauthorized`**: Missing or invalid JWT token\n    \n- **`403 Forbidden`**: If the user tries to update someone else’s data (without LIBRARIAN role)\n    \n- **`404 Not Found`**: No user found with the given ID\n    \n- **`409 Conflict`**: Email or phone already exists"
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"8bf4bf27-7e09-43ac-b0af-d8ad165494e5\",\n    \"email\": \"kaan@getir.com\",\n    \"password\": \"123123\",\n    \"name\": \"Kaan\",\n    \"surname\": \"Açıkgöz\",\n    \"phone\": \"1234567801\",\n    \"address\": \"İzmir\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/users/8bf4bf27-7e09-43ac-b0af-d8ad165494e5",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"8bf4bf27-7e09-43ac-b0af-d8ad165494e5"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:12:22 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"8bf4bf27-7e09-43ac-b0af-d8ad165494e5\",\n    \"email\": \"kaan@getir.com\",\n    \"name\": \"Kaan\",\n    \"surname\": \"Açıkgöz\",\n    \"phone\": \"1234567801\",\n    \"address\": \"İzmir\"\n}"
+						}
+					]
+				},
+				{
+					"name": "getUserById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1NjU1NmRjMS0xNzUzLTQzNGQtOTA2ZS0xYTYyZjZhNDRjOGMiLCJyb2xlIjoiTElCUkFSSUFOIiwiaWF0IjoxNzQ3MDcxMzA5LCJleHAiOjE3NDcwNzQ5MDl9.SFVfx50bxTLVR6zA27ue7Q_SwMeaidcXaXGKw5uIOgE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/users/dc0d7179-9cae-4a76-a7c4-d60f012d24b8",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"dc0d7179-9cae-4a76-a7c4-d60f012d24b8"
+							]
+						},
+						"description": "Retrieves the details of a specific user by their unique ID.\n\n**Access Control:**\n\n- Requires a valid **JWT token**\n    \n- Accessible by **LIBRARIAN**\n    \n\n**Path Parameter:**\n\n- `id` (UUID): The ID of the user to retrieve\n    \n\n**Responses:**\n\n- **`200 OK`**: Returns the user details\n    \n- **`401 Unauthorized`**: If JWT is missing or invalid\n    \n- **`403 Forbidden`**: If the authenticated user is not allowed to access the requested ID\n    \n- **`404 Not Found`**: If the user with the given ID does not exist"
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/v1/users/27f45af1-6e58-414a-8a77-48e242ba8a27",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"27f45af1-6e58-414a-8a77-48e242ba8a27"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:13:16 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"27f45af1-6e58-414a-8a77-48e242ba8a27\",\n    \"email\": \"admin5@getir.com\",\n    \"name\": \"Kaan\",\n    \"surname\": \"Açıkgöz\",\n    \"phone\": \"+905551112240\",\n    \"address\": \"İstanbul\"\n}"
+						},
+						{
+							"name": "404",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/v1/users/dc0d7179-9cae-4a76-a7c4-d60f012d24b8",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"dc0d7179-9cae-4a76-a7c4-d60f012d24b8"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:12:39 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User not found with ID: dc0d7179-9cae-4a76-a7c4-d60f012d24b8\",\n    \"statusCode\": 404,\n    \"fieldErrors\": {}\n}"
+						}
+					]
+				}
+			],
+			"description": "#### **Get All Users**\n\n**Endpoint:**  \n`GET /api/v1/users`\n\n**Description:**  \n  \nRetrieves a list of all registered users.\n\n**Access Control:**\n\n- Requires a valid JWT token\n    \n- Accessible only by **LIBRARIAN**\n    \n\n**Responses:**\n\n- `200 OK`: Returns list of users\n    \n- `401 Unauthorized` / `403 Forbidden`: If the user is not authorized\n    \n\n---\n\n#### **Get User by ID**\n\n**Endpoint:**  \n`GET /api/v1/users/{userId}`\n\n**Description:**  \n  \nFetches a single user by their unique identifier.\n\n**Access Control:**\n\n- Requires a valid JWT token\n    \n- Allowed for **LIBRARIAN** or the user themselves\n    \n\n**Responses:**\n\n- `200 OK`: User found and returned\n    \n- `404 Not Found`: If no user exists with given ID\n    \n\n---\n\n#### **Update User**\n\n**Endpoint:**  \n`PUT /api/v1/users/{userId}`\n\n**Description:**  \n  \nUpdates a user's details (email, password, name, etc.).\n\n**Access Control:**\n\n- Requires JWT token\n    \n- Only the user themselves can update their information\n    \n\n**Constraints:**\n\n- `email` and `phone` must remain unique\n    \n- `password` is re-encoded and stored\n    \n\n**Responses:**\n\n- `200 OK`: Updated successfully\n    \n- `403 Forbidden`: If user tries to update another user's data\n    \n- `409 Conflict`: If email/phone already exists\n    \n\n---\n\n#### **Delete User**\n\n**Endpoint:**  \n`DELETE /api/v1/users/{userId}`\n\n**Description:**  \n  \nDeletes a user account.\n\n**Access Control:**\n\n- Requires JWT token\n    \n- Only the user themselves or **LIBRARIAN** (if authorized) can delete\n    \n\n**Responses:**\n\n- `200 OK`: Successfully deleted\n    \n- `403 Forbidden`: If not authorized\n    \n- `404 Not Found`: If user doesn’t exist"
+		},
+		{
+			"name": "book-crud",
+			"item": [
+				{
+					"name": "createBook",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5MTdmZmY3Ni01OWY1LTRhMzQtYTBkNi1lYjg5MmM5NjU5YTUiLCJyb2xlIjoiTElCUkFSSUFOIiwiaWF0IjoxNzQ3MTY3MTkzLCJleHAiOjE3NDcxNzA3OTN9.sRwAT1yWDQYu_ynX0tpvIdsBcdxO8qqsuYYQdGo1Iz8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Clean Code15\",\n    \"author\": \"Robert C. Martin\",\n    \"isbn\": \"9780132350899\",\n    \"publicationYear\": 2008,\n    \"genre\":\"ADVENTURE\",\n    \"stock\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/books",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"books"
+							]
+						},
+						"description": "Adds a new book to the library collection.\n\n**Access Control:**\n\n- Requires a valid **JWT token**\n    \n- Allowed only for users with the **LIBRARIAN** role\n    \n\n**Constraints:**\n\n- `isbn` must be **unique**\n    \n- `stock` must be ≥ 0\n    \n- `title`, `author`, `isbn`, `publicationYear`, `genre`, and `stock` are required fields\n    \n\n**Responses:**\n\n- **`201 Created`**: Book successfully created\n    \n- **`400 Bad Request`**: Invalid or missing fields\n    \n- **`401 Unauthorized`**: If a **PATRON** attempts to create a book\n    \n- **`401 Unauthorized`**: Missing or invalid JWT token\n    \n- **`403 Forbidden`**: No Auth.\n    \n- **`409 Conflict`**: ISBN already exists"
+					},
+					"response": [
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Clean Code20\",\n    \"author\": \"Robert C. Martin\",\n    \"isbn\": \"9780132350100\",\n    \"publicationYear\": 2008,\n    \"genre\":\"ADVENTURE\",\n    \"stock\": 2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/books",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"books"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:18:52 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"b6cda06c-9309-48b3-922b-d07d86727097\",\n    \"title\": \"Clean Code20\",\n    \"author\": \"Robert C. Martin\",\n    \"isbn\": \"9780132350100\",\n    \"publicationYear\": 2008,\n    \"genre\": \"ADVENTURE\",\n    \"stock\": 2\n}"
+						},
+						{
+							"name": "409",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Clean Code20\",\n    \"author\": \"Robert C. Martin\",\n    \"isbn\": \"9780132350100\",\n    \"publicationYear\": 2008,\n    \"genre\":\"ADVENTURE\",\n    \"stock\": 2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/books",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"books"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:19:05 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"ISBN already exists: 9780132350100\",\n    \"statusCode\": 409,\n    \"fieldErrors\": {}\n}"
+						}
+					]
+				},
+				{
+					"name": "getBooks",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYzBkNzE3OS05Y2FlLTRhNzYtYTdjNC1kNjBmMDEyZDI0YjgiLCJyb2xlIjoiUEFUUk9OIiwiaWF0IjoxNzQ3MDA0MTQ2LCJleHAiOjE3NDcwMDc3NDZ9.LIa4k5UY9Y9EgRDO1CYxM8J950plNjHy1d9h6bH07us",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/books",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"books"
+							]
+						},
+						"description": "Fetches a list of all books available in the system.\n\n**Access Control:**\n\n- Requires a valid **JWT token**\n    \n- Accessible by both **LIBRARIAN** and **PATRON** roles\n    \n\n**Responses:**\n\n- **`200 OK`**: Returns an array of books with fields such as `id`, `title`, `author`, `isbn`, `genre`, `publicationYear`, and `stock`\n    \n- **`401 Unauthorized`**: Missing or invalid JWT token\n    \n- **`403 Forbidden`**: No Auth."
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/books",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"books"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:19:36 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"bbc98c4e-72f5-40cf-ae25-f87d125b4a26\",\n        \"title\": \"Clean Code4\",\n        \"author\": \"Robert C. Martin\",\n        \"isbn\": \"9780132350887\",\n        \"publicationYear\": 2008,\n        \"genre\": \"TECHNOLOGY\",\n        \"stock\": 3\n    },\n    {\n        \"id\": \"aafd17f9-1309-487d-8865-d5df0fe32c9a\",\n        \"title\": \"Clean Code10\",\n        \"author\": \"Robert C. Martin\",\n        \"isbn\": \"9780132350890\",\n        \"publicationYear\": 2008,\n        \"genre\": \"ADVENTURE\",\n        \"stock\": 4\n    },\n    {\n        \"id\": \"7149b315-ac9b-41f5-93bc-b449566bef8c\",\n        \"title\": \"Clean Code15\",\n        \"author\": \"Robert C. Martin\",\n        \"isbn\": \"9780132350899\",\n        \"publicationYear\": 2008,\n        \"genre\": \"ADVENTURE\",\n        \"stock\": 1\n    },\n    {\n        \"id\": \"b6cda06c-9309-48b3-922b-d07d86727097\",\n        \"title\": \"Clean Code20\",\n        \"author\": \"Robert C. Martin\",\n        \"isbn\": \"9780132350100\",\n        \"publicationYear\": 2008,\n        \"genre\": \"ADVENTURE\",\n        \"stock\": 2\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "deleteBook",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful DELETE request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5MTdmZmY3Ni01OWY1LTRhMzQtYTBkNi1lYjg5MmM5NjU5YTUiLCJyb2xlIjoiTElCUkFSSUFOIiwiaWF0IjoxNzQ3MTY3MTkzLCJleHAiOjE3NDcxNzA3OTN9.sRwAT1yWDQYu_ynX0tpvIdsBcdxO8qqsuYYQdGo1Iz8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/books/e2dd2b00-f6df-41bc-910d-0551319c8d33",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"books",
+								"e2dd2b00-f6df-41bc-910d-0551319c8d33"
+							]
+						},
+						"description": "Deletes a specific book from the system using its unique ID.\n\n**Access Control:**\n\n- Requires a valid **JWT token**\n    \n- Only accessible by users with the **LIBRARIAN** role\n    \n\n**Path Parameter:**\n\n- `bookId` – UUID of the book to be deleted\n    \n\n**Responses:**\n\n- **`200 OK`**: Book successfully deleted\n    \n- **`401 Unauthorized`**: JWT token is missing or invalid\n    \n- **`401 Unauthorized`**: Authenticated user does not have LIBRARIAN role\n    \n- **`403 Forbidden`**: No Auth.\n    \n- **`404 Not Found`**: Book with the given ID does not exist"
+					},
+					"response": [
+						{
+							"name": "204",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/books/aafd17f9-1309-487d-8865-d5df0fe32c9a",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"books",
+										"aafd17f9-1309-487d-8865-d5df0fe32c9a"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:20:21 GMT"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "404",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/books/e2dd2b00-f6df-41bc-910d-0551319c8d33",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"books",
+										"e2dd2b00-f6df-41bc-910d-0551319c8d33"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:19:54 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Book not found with ID: e2dd2b00-f6df-41bc-910d-0551319c8d33\",\n    \"statusCode\": 404,\n    \"fieldErrors\": {}\n}"
+						}
+					]
+				},
+				{
+					"name": "updateBook",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1NjU1NmRjMS0xNzUzLTQzNGQtOTA2ZS0xYTYyZjZhNDRjOGMiLCJyb2xlIjoiTElCUkFSSUFOIiwiaWF0IjoxNzQ3MDcxMzA5LCJleHAiOjE3NDcwNzQ5MDl9.SFVfx50bxTLVR6zA27ue7Q_SwMeaidcXaXGKw5uIOgE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"05f23e45-072c-41f6-a216-1e49c6eee61b\",\n    \"title\": \"Upodatedd\",\n    \"author\": \"Robert C. Martin3\",\n    \"isbn\": \"9780132350880\",\n    \"publicationYear\": 1800,\n    \"genre\": \"ADVENTURE\",\n    \"stock\": 5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/books/05f23e45-072c-41f6-a216-1e49c6eee61b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"books",
+								"05f23e45-072c-41f6-a216-1e49c6eee61b"
+							]
+						},
+						"description": "Updates the details of a specific book using its ID.\n\n**Access Control:**\n\n- Requires a valid **JWT token**\n    \n- Only accessible by users with the **LIBRARIAN** role\n    \n\n**Path Parameter:**\n\n- `bookId` – UUID of the book to be updated\n    \n\n**Responses:**\n\n- **`200 OK`**: Book successfully updated\n    \n- **`400 Bad Request`**: Validation error\n    \n- **`401 Unauthorized`**: JWT token is missing or invalid\n    \n- **`401 Unauthorized`**: Authenticated user does not have LIBRARIAN role\n    \n- **`403 Forbidden`**: No Auth.\n    \n- **`404 Not Found`**: Book with the given ID not found\n    \n- **`409 Conflict`**: ISBN already exists for another book"
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"7149b315-ac9b-41f5-93bc-b449566bef8c\",\n    \"title\": \"Clean Code15\",\n    \"author\": \"Robert C. Martin\",\n    \"isbn\": \"9780132350899\",\n    \"publicationYear\": 2008,\n    \"genre\": \"ADVENTURE\",\n    \"stock\": 3\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/books/7149b315-ac9b-41f5-93bc-b449566bef8c",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"books",
+										"7149b315-ac9b-41f5-93bc-b449566bef8c"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:21:52 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"7149b315-ac9b-41f5-93bc-b449566bef8c\",\n    \"title\": \"Clean Code15\",\n    \"author\": \"Robert C. Martin\",\n    \"isbn\": \"9780132350899\",\n    \"publicationYear\": 2008,\n    \"genre\": \"ADVENTURE\",\n    \"stock\": 3\n}"
+						},
+						{
+							"name": "409",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"7149b315-ac9b-41f5-93bc-b449566bef8c\",\n    \"title\": \"Clean Code15\",\n    \"author\": \"Robert C. Martin\",\n    \"isbn\": \"9780132350100\",\n    \"publicationYear\": 2008,\n    \"genre\": \"ADVENTURE\",\n    \"stock\": 3\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/books/7149b315-ac9b-41f5-93bc-b449566bef8c",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"books",
+										"7149b315-ac9b-41f5-93bc-b449566bef8c"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:23:20 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"ISBN already exists: 9780132350100\",\n    \"statusCode\": 409,\n    \"fieldErrors\": {}\n}"
+						}
+					]
+				},
+				{
+					"name": "searchBook",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyN2Y0NWFmMS02ZTU4LTQxNGEtOGE3Ny00OGUyNDJiYThhMjciLCJyb2xlIjoiTElCUkFSSUFOIiwiaWF0IjoxNzQ3MTc3NTE0LCJleHAiOjE3NDcxODExMTR9.EaZLG80FA5NsQ-vCufw8W4X7pLyloGP7YcG6Ipd0mS0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/books/search?title=code",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"books",
+								"search"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "code"
+								}
+							]
+						},
+						"description": "Searches books using any combination of optional filters.\n\n**Access Control:**\n\n- Requires a valid **JWT token**\n    \n- Accessible by both **PATRON** and **LIBRARIAN** roles\n    \n\n**Optional Query Parameters:**\n\n- `title` (String) – Filter by partial or full book title\n    \n- `author` (String) – Filter by partial or full author name\n    \n- `isbn` (String) – Filter by exact ISBN\n    \n- `genre` (Enum) – Filter by genre (e.g., `FICTION`, `TECHNOLOGY`, etc.)\n    \n\n**Pagination:**  \n  \nSupports standard Spring pageable params:\n\n- `page`, `size`, `sort`\n    \n\n**Responses:**\n\n- **`200 OK`**: Returns paginated list of matching books\n    \n- **`401 Unauthorized`**: If token is missing or invalid"
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/books/search?title=code",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"books",
+										"search"
+									],
+									"query": [
+										{
+											"key": "title",
+											"value": "code"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:05:26 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [\n        {\n            \"id\": \"bbc98c4e-72f5-40cf-ae25-f87d125b4a26\",\n            \"title\": \"Clean Code4\",\n            \"author\": \"Robert C. Martin\",\n            \"isbn\": \"9780132350887\",\n            \"publicationYear\": 2008,\n            \"genre\": \"TECHNOLOGY\",\n            \"stock\": 3\n        },\n        {\n            \"id\": \"aafd17f9-1309-487d-8865-d5df0fe32c9a\",\n            \"title\": \"Clean Code10\",\n            \"author\": \"Robert C. Martin\",\n            \"isbn\": \"9780132350890\",\n            \"publicationYear\": 2008,\n            \"genre\": \"ADVENTURE\",\n            \"stock\": 4\n        },\n        {\n            \"id\": \"7149b315-ac9b-41f5-93bc-b449566bef8c\",\n            \"title\": \"Clean Code15\",\n            \"author\": \"Robert C. Martin\",\n            \"isbn\": \"9780132350899\",\n            \"publicationYear\": 2008,\n            \"genre\": \"ADVENTURE\",\n            \"stock\": 1\n        }\n    ],\n    \"pageable\": {\n        \"pageNumber\": 0,\n        \"pageSize\": 20,\n        \"sort\": {\n            \"empty\": true,\n            \"unsorted\": true,\n            \"sorted\": false\n        },\n        \"offset\": 0,\n        \"unpaged\": false,\n        \"paged\": true\n    },\n    \"totalElements\": 3,\n    \"totalPages\": 1,\n    \"last\": true,\n    \"size\": 20,\n    \"number\": 0,\n    \"sort\": {\n        \"empty\": true,\n        \"unsorted\": true,\n        \"sorted\": false\n    },\n    \"numberOfElements\": 3,\n    \"first\": true,\n    \"empty\": false\n}"
+						}
+					]
+				},
+				{
+					"name": "getBookById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYzBkNzE3OS05Y2FlLTRhNzYtYTdjNC1kNjBmMDEyZDI0YjgiLCJyb2xlIjoiUEFUUk9OIiwiaWF0IjoxNzQ3MDA0MTQ2LCJleHAiOjE3NDcwMDc3NDZ9.LIa4k5UY9Y9EgRDO1CYxM8J950plNjHy1d9h6bH07us",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/books/b4a264b4-79d6-44f2-b7b3-7df07add15c6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"books",
+								"b4a264b4-79d6-44f2-b7b3-7df07add15c6"
+							]
+						},
+						"description": "Retrieves detailed information about a specific book by its unique identifier.\n\n**Access Control:**\n\n- Requires a valid **JWT token**\n    \n- Accessible by **PATRON** and **LIBRARIAN** roles\n    \n\n**Path Parameter:**\n\n- `id` (UUID) – ID of the book to retrieve\n    \n\n**Responses:**\n\n- **`200 OK`**: Returns the book's details\n    \n- **`400 Bad Request`**: If the ID format is invalid\n    \n- **`404 Not Found`**: If no book exists with the specified ID"
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/books/b6cda06c-9309-48b3-922b-d07d86727097",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"books",
+										"b6cda06c-9309-48b3-922b-d07d86727097"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:24:07 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"b6cda06c-9309-48b3-922b-d07d86727097\",\n    \"title\": \"Clean Code20\",\n    \"author\": \"Robert C. Martin\",\n    \"isbn\": \"9780132350100\",\n    \"publicationYear\": 2008,\n    \"genre\": \"ADVENTURE\",\n    \"stock\": 2\n}"
+						}
+					]
+				},
+				{
+					"name": "stockAvailability",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YmY0YmYyNy03ZTA5LTQzYWMtYjBhZi1kOGFkMTY1NDk0ZTUiLCJyb2xlIjoiUEFUUk9OIiwiaWF0IjoxNzQ3MTY1MjAyLCJleHAiOjE3NDcxNjg4MDJ9.2WeZKgex7wr0Vga9UfFPhP_vF4PeWuk-DyjfJniTssg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/books/stream/stock",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"books",
+								"stream",
+								"stock"
+							]
+						},
+						"description": "Streams real-time updates for book stock availability using **Server-Sent Events (SSE)**.\n\n**Access Control:**\n\n- Requires a valid **JWT token**\n    \n- Accessible by **PATRON** and **LIBRARIAN** roles\n    \n\n**Produces:**\n\n- `text/event-stream` – continuous stream of `BookStockEvent` objects\n    \n\n**Use Case:**\n\n- Ideal for dashboards or admin panels to reflect live stock changes as books are borrowed or returned\n    \n\n**Responses:**\n\n- **`200 OK`**: Starts the event stream\n    \n- **`401 Unauthorized`**: If the token is missing or invalid"
+					},
+					"response": []
+				}
+			],
+			"description": "#### **Create Book**\n\n**Endpoint:**  \n`POST /api/v1/books`\n\n**Description:**  \n  \nCreates a new book record with initial details including title, author, ISBN, genre, and stock quantity.\n\n**Access Control:**\n\n- Requires JWT token\n    \n- **LIBRARIAN** role only\n    \n\n**Constraints:**\n\n- `isbn` must be unique\n    \n- `stock` must be a non-negative integer\n    \n\n**Responses:**\n\n- `201 Created`: Book successfully created\n    \n- `409 Conflict`: ISBN already exists\n    \n- `401/403`: Unauthorized access\n    \n\n---\n\n#### **Get All Books**\n\n**Endpoint:**  \n`GET /api/v1/books`\n\n**Description:**  \n  \nReturns a paginated list of all books in the system.\n\n**Access Control:**\n\n- Requires JWT token\n    \n- Accessible by **PATRON** and **LIBRARIAN**\n    \n\n**Query Params (Optional):**\n\n- `page`, `size`, `sort`\n    \n\n**Responses:**\n\n- `200 OK`: List of books returned\n    \n- `401/403`: Unauthorized access\n    \n\n---\n\n#### **Search Books**\n\n**Endpoint:**  \n`GET /api/v1/books/search`\n\n**Description:**  \n  \nSearches books by one or more optional parameters.\n\n**Query Parameters (all optional):**\n\n- `title`\n    \n- `author`\n    \n- `isbn`\n    \n- `genre`\n    \n\n**Access Control:**\n\n- Requires JWT token\n    \n- Accessible by **PATRON** and **LIBRARIAN**\n    \n\n**Responses:**\n\n- `200 OK`: Matching books returned\n    \n- `401/403`: Unauthorized access\n    \n\n---\n\n#### **Get Book by ID**\n\n**Endpoint:**  \n`GET /api/v1/books/{bookId}`\n\n**Description:**  \n  \nFetches detailed information about a specific book by its ID.\n\n**Access Control:**\n\n- Requires JWT token\n    \n- Accessible by **PATRON** and **LIBRARIAN**\n    \n\n**Responses:**\n\n- `200 OK`: Book found and returned\n    \n- `404 Not Found`: If book not found\n    \n\n---\n\n#### **Update Book**\n\n**Endpoint:**  \n`PUT /api/v1/books/{bookId}`\n\n**Description:**  \n  \nUpdates a book’s information.\n\n**Access Control:**\n\n- Requires JWT token\n    \n- **LIBRARIAN** role only\n    \n\n**Responses:**\n\n- `200 OK`: Successfully updated\n    \n- `409 Conflict`: ISBN conflict\n    \n- `404 Not Found`: If book does not exist\n    \n- `401/403`: Unauthorized\n    \n\n---\n\n#### **Delete Book**\n\n**Endpoint:**  \n`DELETE /api/v1/books/{bookId}`\n\n**Description:**  \n  \nDeletes a book by its ID.\n\n**Access Control:**\n\n- Requires JWT token\n    \n- **LIBRARIAN** role only\n    \n\n**Responses:**\n\n- `200 OK`: Successfully deleted\n    \n- `404 Not Found`: If the book doesn't exist\n    \n- `401/403`: Unauthorized access\n    \n\n---\n\n#### **Stock Availability Stream**\n\n**Endpoint:**  \n`GET /api/v1/books/stream/stock`  \n**Produces:** `text/event-stream`\n\n**Description:**  \n  \nStreams real-time stock updates to subscribed clients using **Server-Sent Events (SSE)**.\n\n**Access Control:**\n\n- Requires JWT token\n    \n- Accessible by **PATRON** and **LIBRARIAN**\n    \n\n**Use Case:**\n\n- Frontends can subscribe to this stream to display live book stock updates."
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "registerPatron",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"kaan5@getir.com\",\n    \"password\": \"123456\",\n    \"name\": \"Kaan\",\n    \"surname\": \"Açıkgöz\",\n    \"phone\": \"1234567804\",\n    \"address\": \"Manisa\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						},
+						"description": "Registers a new user with the role of **PATRON**.\n\n**Constraints:**\n\n- `email` and `phone` must be **unique**\n    \n- If either already exists, returns **`409 Conflict`**\n    \n- `address` is **optional**\n    \n\n**On success:**  \n  \nReturns message `\"User successfully registered as PATRON\"` with **`200 OK`**"
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"kaan5@getir.com\",\n    \"password\": \"123456\",\n    \"name\": \"Kaan\",\n    \"surname\": \"Açıkgöz\",\n    \"phone\": \"1234567804\",\n    \"address\": \"Manisa\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/auth/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:15:03 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User successfully registered as PATRON\"\n}"
+						},
+						{
+							"name": "409",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"kaan5@getir.com\",\n    \"password\": \"123456\",\n    \"name\": \"Kaan\",\n    \"surname\": \"Açıkgöz\",\n    \"phone\": \"1234567804\",\n    \"address\": \"Manisa\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/auth/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:15:22 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Validation failed\",\n    \"statusCode\": 409,\n    \"fieldErrors\": {\n        \"phone\": \"Phone already exists: 1234567804\",\n        \"email\": \"Email already exists: kaan5@getir.com\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "registerLibrarian",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYjg5YjFiYy1mZjRhLTQ5YjQtYTQzOC01MTc2NzI3NGQ4MzQiLCJyb2xlIjoiTElCUkFSSUFOIiwiaWF0IjoxNzQ3MTY4NTYyLCJleHAiOjE3NDcxNzIxNjJ9.c24YBMDMbJq_rPu946hJZ6O08WOqPZ2cFSTu7zVyBDY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin5@getir.com\",\n    \"password\": \"123456\",\n    \"name\": \"Kaan\",\n    \"surname\": \"Açıkgöz\",\n    \"phone\": \"+905551112240\",\n    \"address\": \"İstanbul\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/register-librarian",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register-librarian"
+							]
+						},
+						"description": "Registers a new user with the role of **LIBRARIAN**.\n\n**Constraints:**\n\n- `email` and `phone` must be **unique**\n    \n- If either already exists, returns **`409 Conflict`**\n    \n- `address` is **optional**\n    \n- Only users with the **LIBRARIAN** role should access this endpoint\n    \n\n**On success:**  \n  \nReturns message `\"User successfully registered as LIBRARIAN\"` with **`200 OK`**"
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"admin6@getir.com\",\n    \"password\": \"123456\",\n    \"name\": \"Kaan\",\n    \"surname\": \"Açıkgöz\",\n    \"phone\": \"+905551112241\",\n    \"address\": \"İstanbul\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/auth/register-librarian",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"register-librarian"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:16:44 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User successfully registered as LIBRARIAN\"\n}"
+						},
+						{
+							"name": "401",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"admin5@getir.com\",\n    \"password\": \"123456\",\n    \"name\": \"Kaan\",\n    \"surname\": \"Açıkgöz\",\n    \"phone\": \"+905551112240\",\n    \"address\": \"İstanbul\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/auth/register-librarian",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"register-librarian"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:15:33 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 401,\n    \"message\": \"Token expired\"\n}"
+						},
+						{
+							"name": "409",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"admin5@getir.com\",\n    \"password\": \"123456\",\n    \"name\": \"Kaan\",\n    \"surname\": \"Açıkgöz\",\n    \"phone\": \"+905551112240\",\n    \"address\": \"İstanbul\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/auth/register-librarian",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"register-librarian"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:16:21 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Validation failed\",\n    \"statusCode\": 409,\n    \"fieldErrors\": {\n        \"phone\": \"Phone already exists: +905551112240\",\n        \"email\": \"Email already exists: admin5@getir.com\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "loginPatron",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful PUT request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"kaan5@getir.com\",\n    \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						},
+						"description": "Authenticates a user (either **PATRON** or **LIBRARIAN**) and returns a **JWT token**.\n\n**Request Body:**\n\n- `email` (must be registered)\n    \n- `password` (plain text, must match the stored password)\n    \n\n**Constraints:**\n\n- If email or password is incorrect, returns **`401 Unauthorized`**\n    \n- Only registered users can log in\n    \n\n**On success:**  \n  \nReturns a JWT token and user role in the response body with **`200 OK`**"
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"kaan5@getir.com\",\n    \"password\": \"123456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:15:48 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwMjE5M2IxOS02M2Y4LTRhZjEtOTI3Ni05NDU4YTk2YmY0ZWIiLCJyb2xlIjoiUEFUUk9OIiwiaWF0IjoxNzQ3MTc4MTQ4LCJleHAiOjE3NDcxODE3NDh9.jWWpKCaUn9kH_fv-ulD3g_gfC5kizGdrBG9JXzbnVI0\"\n}"
+						},
+						{
+							"name": "401",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"kaan5@getir.com\",\n    \"password\": \"1234556\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:17:11 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Invalid email or password\",\n    \"statusCode\": 401,\n    \"fieldErrors\": {}\n}"
+						}
+					]
+				},
+				{
+					"name": "loginLibrarian",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin5@getir.com\",\n    \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						},
+						"description": "Authenticates a user (either **PATRON** or **LIBRARIAN**) and returns a **JWT token**.\n\n**Request Body:**\n\n- `email` (must be registered)\n    \n- `password` (plain text, must match the stored password)\n    \n\n**Constraints:**\n\n- If email or password is incorrect, returns **`401 Unauthorized`**\n    \n- Only registered users can log in\n    \n\n**On success:**\n\nReturns a JWT token and user role in the response body with **`200 OK`**"
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"admin5@getir.com\",\n    \"password\": \"123456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:05:14 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyN2Y0NWFmMS02ZTU4LTQxNGEtOGE3Ny00OGUyNDJiYThhMjciLCJyb2xlIjoiTElCUkFSSUFOIiwiaWF0IjoxNzQ3MTc3NTE0LCJleHAiOjE3NDcxODExMTR9.EaZLG80FA5NsQ-vCufw8W4X7pLyloGP7YcG6Ipd0mS0\"\n}"
+						},
+						{
+							"name": "401",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"admin5@getir.com\",\n    \"password\": \"1234526\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:17:24 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Invalid email or password\",\n    \"statusCode\": 401,\n    \"fieldErrors\": {}\n}"
+						}
+					]
+				}
+			],
+			"description": "This section contains endpoints for user registration and login. Authentication is based on JWT (JSON Web Token), and user roles determine access throughout the system.\n\n---\n\n#### **Register Patron**\n\n**Endpoint:**  \n`POST /api/v1/auth/register`\n\n**Description:**\n\nRegisters a new user with the **PATRON** role.\n\n**Request Body:**\n\n```\njsonCopyEdit{\n  \"email\": \"user@example.com\",\n  \"password\": \"yourPassword123\",\n  \"name\": \"John\",\n  \"surname\": \"Doe\",\n  \"phone\": \"1234567890\",\n  \"address\": \"Optional Address\"\n}\n\n ```\n\n**Constraints:**\n\n- `email` and `phone` must be unique\n    \n- `address` is optional\n    \n\n**Responses:**\n\n- `201 Created`: Successfully registered\n    \n- `409 Conflict`: Email or phone already exists\n    \n\n---\n\n#### **Register Librarian**\n\n**Endpoint:**  \n`POST /api/v1/auth/register-librarian`\n\n**Description:**\n\nRegisters a new user with the **LIBRARIAN** role.\n\nThis endpoint is typically restricted to admins or initial system setup.\n\n**Request Body:**\n\n```\njsonCopyEdit{\n  \"email\": \"admin@example.com\",\n  \"password\": \"secureAdminPass\",\n  \"name\": \"Jane\",\n  \"surname\": \"Smith\",\n  \"phone\": \"0987654321\",\n  \"address\": \"Admin Office\"\n}\n\n ```\n\n**Responses:**\n\n- `201 Created`: Librarian registered\n    \n- `409 Conflict`: Email or phone already exists\n    \n\n---\n\n#### **Login**\n\n**Endpoint:**  \n`POST /api/v1/auth/login`\n\n**Description:**\n\nAuthenticates a user (Patron or Librarian) and returns a JWT token on success.\n\n**Request Body:**\n\n```\njsonCopyEdit{\n  \"email\": \"user@example.com\",\n  \"password\": \"yourPassword123\"\n}\n\n ```\n\n**Responses:**\n\n- `200 OK`: JWT returned\n    \n- `401 Unauthorized`: Invalid credentials\n    \n\n**Example Response:**\n\n```\njsonCopyEdit{\n  \"token\": \"eyJhbGciOiJIUzI1NiJ9...\"\n}\n\n ```\n\n**Notes:**\n\n- Use this token in subsequent requests as a `Bearer Token` in the `Authorization` header."
+		},
+		{
+			"name": "borrowing",
+			"item": [
+				{
+					"name": "borrowBook",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YmY0YmYyNy03ZTA5LTQzYWMtYjBhZi1kOGFkMTY1NDk0ZTUiLCJyb2xlIjoiUEFUUk9OIiwiaWF0IjoxNzQ3MTY1MjAyLCJleHAiOjE3NDcxNjg4MDJ9.2WeZKgex7wr0Vga9UfFPhP_vF4PeWuk-DyjfJniTssg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\":\"8bf4bf27-7e09-43ac-b0af-d8ad165494e5\",\n    \"bookId\":\"7149b315-ac9b-41f5-93bc-b449566bef8c\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/borrowings",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"borrowings"
+							]
+						},
+						"description": "Creates a new borrowing record for a user and decreases the book's stock by 1.\n\n**Access Control:**\n\n- Requires a valid **JWT token**\n    \n- Accessible by **PATRON** role only\n    \n\n**Behavior:**\n\n- Validates if the user exists\n    \n- Checks if the book exists and has stock available\n    \n\n**Responses:**\n\n- **`201 Created`**: Book successfully borrowed\n    \n- **`401 Unauthorized`**: If token is missing or invalid\n    \n- **`404 Not Found`**: If user or book does not exist\n    \n- **`409 Conflict`**: If book is out of stock or already borrowed by the user"
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userId\":\"8bf4bf27-7e09-43ac-b0af-d8ad165494e5\",\n    \"bookId\":\"7149b315-ac9b-41f5-93bc-b449566bef8c\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/borrowings",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"borrowings"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:24:59 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"855a7c73-48e7-4291-b75d-f24d03d6e231\",\n    \"userId\": \"8bf4bf27-7e09-43ac-b0af-d8ad165494e5\",\n    \"bookId\": \"7149b315-ac9b-41f5-93bc-b449566bef8c\",\n    \"borrowDate\": \"2025-05-13\",\n    \"dueDate\": \"2025-05-27\",\n    \"returnDate\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "returnBook",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4YmY0YmYyNy03ZTA5LTQzYWMtYjBhZi1kOGFkMTY1NDk0ZTUiLCJyb2xlIjoiUEFUUk9OIiwiaWF0IjoxNzQ3MTY1MjAyLCJleHAiOjE3NDcxNjg4MDJ9.2WeZKgex7wr0Vga9UfFPhP_vF4PeWuk-DyjfJniTssg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/borrowings/6b3cf9b5-10e6-4c1e-bfb2-0ad2d5eba0df/return",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"borrowings",
+								"6b3cf9b5-10e6-4c1e-bfb2-0ad2d5eba0df",
+								"return"
+							]
+						},
+						"description": "Marks a borrowing record as returned and increases the book's stock by 1.\n\n**Path Parameter:**\n\n- `id`: UUID of the borrowing record\n    \n\n**Access Control:**\n\n- Requires a valid **JWT token**\n    \n- Accessible by **PATRON** role only\n    \n- Only the user who borrowed the book can return it\n    \n\n**Behavior:**\n\n- Validates that the borrowing exists and hasn't already been returned\n    \n- Updates the return date\n    \n- Increments the book’s stock\n    \n- Emits a real-time stock update to `/stream/stock`\n    \n\n**Responses:**\n\n- **`200 OK`**: Book successfully returned\n    \n- **`401 Unauthorized`**: If token is missing or invalid\n    \n- **`404 Not Found`**: If borrowing record does not exist\n    \n- **`409 Conflict`**: If the book has already been returned"
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/v1/borrowings/3729f7ee-a812-4ad9-b282-0cc2658b0272/return",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"borrowings",
+										"3729f7ee-a812-4ad9-b282-0cc2658b0272",
+										"return"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:25:52 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"3729f7ee-a812-4ad9-b282-0cc2658b0272\",\n    \"userId\": \"8bf4bf27-7e09-43ac-b0af-d8ad165494e5\",\n    \"bookId\": \"7149b315-ac9b-41f5-93bc-b449566bef8c\",\n    \"borrowDate\": \"2025-05-13\",\n    \"dueDate\": \"2025-05-27\",\n    \"returnDate\": \"2025-05-13\"\n}"
+						}
+					]
+				},
+				{
+					"name": "getAllBorrowings",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5MTdmZmY3Ni01OWY1LTRhMzQtYTBkNi1lYjg5MmM5NjU5YTUiLCJyb2xlIjoiTElCUkFSSUFOIiwiaWF0IjoxNzQ3MTY3MTkzLCJleHAiOjE3NDcxNzA3OTN9.sRwAT1yWDQYu_ynX0tpvIdsBcdxO8qqsuYYQdGo1Iz8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/borrowings",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"borrowings"
+							]
+						},
+						"description": "Retrieves a list of all borrowing transactions in the system.\n\n**Access Control:**\n\n- Requires a valid **JWT token**\n    \n- Accessible by users with the **LIBRARIAN** role\n    \n\n**Behavior:**\n\n- Returns all borrowings, including both active and returned books\n    \n- Includes user and book info in the response (as applicable)\n    \n\n**Responses:**\n\n- **`200 OK`**: Successfully retrieved the list\n    \n- **`401 Unauthorized`**: If token is missing or invalid\n    \n- **`401 Unauthorized`**: If the user does not have librarian privileges\n    \n- **`403 Forbidden`**: No Auth"
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/v1/borrowings",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"borrowings"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:28:00 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"62c85c5f-253e-405b-bfd6-d72db39cf39b\",\n        \"userId\": \"ab89b1bc-ff4a-49b4-a438-51767274d834\",\n        \"bookId\": \"e2dd2b00-f6df-41bc-910d-0551319c8d33\",\n        \"borrowDate\": \"2025-05-13\",\n        \"dueDate\": \"2025-05-27\",\n        \"returnDate\": null\n    },\n    {\n        \"id\": \"93a393df-6a6c-470e-8157-cf4af0d2d859\",\n        \"userId\": \"8bf4bf27-7e09-43ac-b0af-d8ad165494e5\",\n        \"bookId\": \"e2dd2b00-f6df-41bc-910d-0551319c8d33\",\n        \"borrowDate\": \"2025-05-13\",\n        \"dueDate\": \"2025-05-27\",\n        \"returnDate\": \"2025-05-13\"\n    },\n    {\n        \"id\": \"21bf1238-914b-48f7-914e-f81c0551f03f\",\n        \"userId\": \"8bf4bf27-7e09-43ac-b0af-d8ad165494e5\",\n        \"bookId\": \"e2dd2b00-f6df-41bc-910d-0551319c8d33\",\n        \"borrowDate\": \"2025-05-13\",\n        \"dueDate\": \"2025-05-27\",\n        \"returnDate\": \"2025-05-13\"\n    },\n    {\n        \"id\": \"110fd949-9ab1-4d62-9895-ed91b3430b7f\",\n        \"userId\": \"8bf4bf27-7e09-43ac-b0af-d8ad165494e5\",\n        \"bookId\": \"e2dd2b00-f6df-41bc-910d-0551319c8d33\",\n        \"borrowDate\": \"2025-05-13\",\n        \"dueDate\": \"2025-05-27\",\n        \"returnDate\": null\n    },\n    {\n        \"id\": \"3de29c68-fec8-422a-a404-c11b54a249be\",\n        \"userId\": \"8bf4bf27-7e09-43ac-b0af-d8ad165494e5\",\n        \"bookId\": \"e2dd2b00-f6df-41bc-910d-0551319c8d33\",\n        \"borrowDate\": \"2025-05-13\",\n        \"dueDate\": \"2025-05-27\",\n        \"returnDate\": \"2025-05-13\"\n    },\n    {\n        \"id\": \"21c689fc-0a69-483d-8b71-3d972221dec2\",\n        \"userId\": \"8bf4bf27-7e09-43ac-b0af-d8ad165494e5\",\n        \"bookId\": \"aafd17f9-1309-487d-8865-d5df0fe32c9a\",\n        \"borrowDate\": \"2025-05-13\",\n        \"dueDate\": \"2025-05-27\",\n        \"returnDate\": null\n    },\n    {\n        \"id\": \"79531343-52cc-485c-a00d-5912ebcddbcb\",\n        \"userId\": \"8bf4bf27-7e09-43ac-b0af-d8ad165494e5\",\n        \"bookId\": \"aafd17f9-1309-487d-8865-d5df0fe32c9a\",\n        \"borrowDate\": \"2025-05-13\",\n        \"dueDate\": \"2025-05-27\",\n        \"returnDate\": \"2025-05-13\"\n    },\n    {\n        \"id\": \"a73f6c9f-0ce6-42d2-b395-629ce4ec07f5\",\n        \"userId\": \"8bf4bf27-7e09-43ac-b0af-d8ad165494e5\",\n        \"bookId\": \"7149b315-ac9b-41f5-93bc-b449566bef8c\",\n        \"borrowDate\": \"2025-05-13\",\n        \"dueDate\": \"2025-05-27\",\n        \"returnDate\": null\n    },\n    {\n        \"id\": \"6b3cf9b5-10e6-4c1e-bfb2-0ad2d5eba0df\",\n        \"userId\": \"8bf4bf27-7e09-43ac-b0af-d8ad165494e5\",\n        \"bookId\": \"7149b315-ac9b-41f5-93bc-b449566bef8c\",\n        \"borrowDate\": \"2025-05-13\",\n        \"dueDate\": \"2025-05-27\",\n        \"returnDate\": \"2025-05-13\"\n    },\n    {\n        \"id\": \"855a7c73-48e7-4291-b75d-f24d03d6e231\",\n        \"userId\": \"8bf4bf27-7e09-43ac-b0af-d8ad165494e5\",\n        \"bookId\": \"7149b315-ac9b-41f5-93bc-b449566bef8c\",\n        \"borrowDate\": \"2025-05-13\",\n        \"dueDate\": \"2025-05-27\",\n        \"returnDate\": null\n    },\n    {\n        \"id\": \"ba9034f8-8515-4389-9f42-28d654eba295\",\n        \"userId\": \"8bf4bf27-7e09-43ac-b0af-d8ad165494e5\",\n        \"bookId\": \"7149b315-ac9b-41f5-93bc-b449566bef8c\",\n        \"borrowDate\": \"2025-05-13\",\n        \"dueDate\": \"2025-05-27\",\n        \"returnDate\": null\n    },\n    {\n        \"id\": \"3729f7ee-a812-4ad9-b282-0cc2658b0272\",\n        \"userId\": \"8bf4bf27-7e09-43ac-b0af-d8ad165494e5\",\n        \"bookId\": \"7149b315-ac9b-41f5-93bc-b449566bef8c\",\n        \"borrowDate\": \"2025-05-13\",\n        \"dueDate\": \"2025-05-27\",\n        \"returnDate\": \"2025-05-13\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "getBorrowingById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYzBkNzE3OS05Y2FlLTRhNzYtYTdjNC1kNjBmMDEyZDI0YjgiLCJyb2xlIjoiUEFUUk9OIiwiaWF0IjoxNzQ3MDcxMzg2LCJleHAiOjE3NDcwNzQ5ODZ9.ApA3Ajx1PDpX-M8GgZogW2C8oii8yvFSSiFvDxqBwrI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/borrowings/c3a48d05-c84a-4874-a6c0-f4ff423fb288",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"borrowings",
+								"c3a48d05-c84a-4874-a6c0-f4ff423fb288"
+							]
+						},
+						"description": "Retrieves detailed information about a specific borrowing record by its unique ID.\n\n**Access Control:**\n\n- Requires a valid **JWT token**\n    \n- Accessible by users with the **LIBRARIAN and PATRON** role\n    \n\n**Path Parameter:**\n\n- `id` (UUID) — The ID of the borrowing record to retrieve\n    \n\n**Behavior:**\n\n- Returns full borrowing details including user and book references\n    \n- If the record doesn't exist, a `404 Not Found` is returned\n    \n\n**Responses:**\n\n- **`200 OK`**: Successfully retrieved the borrowing record\n    \n- **`401 Unauthorized`**: If token is missing or invalid\n    \n- **`401 Unauthorized`**: If the user lacks necessary permissions\n    \n- **`403 Forbidden`**: No Auth\n    \n- **`404 Not Found`**: If no borrowing exists with the provided ID"
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/v1/borrowings/62c85c5f-253e-405b-bfd6-d72db39cf39b",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"borrowings",
+										"62c85c5f-253e-405b-bfd6-d72db39cf39b"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:28:28 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"62c85c5f-253e-405b-bfd6-d72db39cf39b\",\n    \"userId\": \"ab89b1bc-ff4a-49b4-a438-51767274d834\",\n    \"bookId\": \"e2dd2b00-f6df-41bc-910d-0551319c8d33\",\n    \"borrowDate\": \"2025-05-13\",\n    \"dueDate\": \"2025-05-27\",\n    \"returnDate\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "getBorrowingByUserId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYzBkNzE3OS05Y2FlLTRhNzYtYTdjNC1kNjBmMDEyZDI0YjgiLCJyb2xlIjoiUEFUUk9OIiwiaWF0IjoxNzQ3MDcxMzg2LCJleHAiOjE3NDcwNzQ5ODZ9.ApA3Ajx1PDpX-M8GgZogW2C8oii8yvFSSiFvDxqBwrI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/borrowings/user/a86801b1-4575-4301-8d68-cbed6d2d8579",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"borrowings",
+								"user",
+								"a86801b1-4575-4301-8d68-cbed6d2d8579"
+							]
+						},
+						"description": "Retrieves all borrowing records associated with a specific user.\n\n**Access Control:**\n\n- Requires a valid **JWT token**\n    \n- Accessible by:\n    \n    - **LIBRARIAN** (can view any user’s borrowings)\n        \n    - **PATRON** (can only view their own borrowings)\n        \n\n**Path Parameter:**\n\n- `userId` (UUID) — The ID of the user whose borrowing history you want to fetch\n    \n\n**Behavior:**\n\n- Returns a list of borrowings for the given user\n    \n- If the user has no borrowings, an empty list is returned\n    \n- If the user does not exist, returns `404 Not Found`\n    \n\n**Responses:**\n\n- **`200 OK`**: Successfully retrieved the list of borrowings\n    \n- **`401 Unauthorized`**: If token is missing or invalid\n    \n- **`401 Unauthorized`**: If a patron tries to access another user's data\n    \n- **`403 Forbidden`**: No Auth\n    \n- **`404 Not Found`**: If the user ID does not exist in the system"
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/v1/borrowings/user/ab89b1bc-ff4a-49b4-a438-51767274d834",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"borrowings",
+										"user",
+										"ab89b1bc-ff4a-49b4-a438-51767274d834"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:29:04 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"62c85c5f-253e-405b-bfd6-d72db39cf39b\",\n        \"userId\": \"ab89b1bc-ff4a-49b4-a438-51767274d834\",\n        \"bookId\": \"e2dd2b00-f6df-41bc-910d-0551319c8d33\",\n        \"borrowDate\": \"2025-05-13\",\n        \"dueDate\": \"2025-05-27\",\n        \"returnDate\": null\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "overdue",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYjg5YjFiYy1mZjRhLTQ5YjQtYTQzOC01MTc2NzI3NGQ4MzQiLCJyb2xlIjoiTElCUkFSSUFOIiwiaWF0IjoxNzQ3MTQ3NjkxLCJleHAiOjE3NDcxNTEyOTF9.j05Gjg7Na39zcsdVQWIPJUbGJTLSraoxGHfO7766QfM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/borrowings/overdue",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"borrowings",
+								"overdue"
+							]
+						},
+						"description": "Retrieves a list of borrowings where books were not returned within the allowed return period.\n\n**Access Control:**\n\n- Requires a valid **JWT token**\n    \n- Accessible only by users with the **LIBRARIAN** role\n    \n\n**Behavior:**\n\n- Returns all borrowings that are overdue (i.e., `returnDate` is `null` and the borrow period has expired)\n    \n- Typically based on a predefined loan period (e.g., 14 days)\n    \n- Useful for tracking which users haven't returned books on time\n    \n\n**Responses:**\n\n- **`200 OK`**: Successfully retrieved the list of overdue borrowings\n    \n- **`401 Unauthorized`**: If no valid token is provided\n    \n- **`401 Unauthorized`**: If a user without the LIBRARIAN role attempts access\n    \n- **`403 Forbidden`**: No Auth"
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/v1/borrowings/overdue",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"borrowings",
+										"overdue"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:29:22 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "[]"
+						}
+					]
+				},
+				{
+					"name": "overdue-report",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYjg5YjFiYy1mZjRhLTQ5YjQtYTQzOC01MTc2NzI3NGQ4MzQiLCJyb2xlIjoiTElCUkFSSUFOIiwiaWF0IjoxNzQ3MTQ3NjkxLCJleHAiOjE3NDcxNTEyOTF9.j05Gjg7Na39zcsdVQWIPJUbGJTLSraoxGHfO7766QfM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/borrowings/overdue/report",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"borrowings",
+								"overdue",
+								"report"
+							]
+						},
+						"description": "Returns a summarized report of all overdue borrowings in the system.\n\n**Access Control:**\n\n- Requires a valid **JWT token**\n    \n- Accessible only by users with the **LIBRARIAN** role\n    \n\n**Behavior:**\n\n- Generates an aggregated report of overdue borrowings\n    \n- Report may include:\n    \n    - Total number of overdue books\n        \n    - List of users with overdue borrowings\n        \n    - Book titles and overdue durations\n        \n\n**Responses:**\n\n- **`200 OK`**: Report generated and returned successfully\n    \n- **`401 Unauthorized`**: If no valid token is provided\n    \n- **`401 Unauthorized`**: If the user lacks the LIBRARIAN role\n    \n- **`403 Forbidden`**: No Auth"
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/v1/borrowings/overdue/report",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"borrowings",
+										"overdue",
+										"report"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain;charset=UTF-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "157"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 23:29:35 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "📚 OVERDUE BOOK REPORT\n-----------------------------\nTotal Overdue Borrowings: 0\nNumber of Unique Users: 0\nLast Generated: 2025-05-13\n\nPer User Breakdown:\n"
+						}
+					]
+				}
+			],
+			"description": "This section handles book borrowing and return operations, as well as listing current and overdue borrowings.  \n  \nAuthentication is required (Patron or Librarian), and some actions are restricted by role.\n\n---\n\n#### **Borrow Book**\n\n**Endpoint:**  \n`POST /api/v1/borrowings`\n\n**Description:**  \n  \nAllows a Patron to borrow a book if it's in stock and not already borrowed.\n\n**Request Body:**\n\n```\njsonCopyEdit{\n  \"userId\": \"uuid-of-user\",\n  \"bookId\": \"uuid-of-book\"\n}\n\n ```\n\n**Constraints:**\n\n- Book must have available stock\n    \n- User must exist and be a Patron\n    \n- User cannot borrow the same book more than once simultaneously\n    \n\n**Responses:**\n\n- `201 Created`: Borrowing successful\n    \n- `404 Not Found`: Book or User does not exist\n    \n- `409 Conflict`: Book out of stock or already borrowed\n    \n\n---\n\n#### **Return Book**\n\n**Endpoint:**  \n`PUT /api/v1/borrowings/{borrowingId}/return`\n\n**Description:**  \n  \nAllows a Patron to return a previously borrowed book.\n\n**Responses:**\n\n- `200 OK`: Return successful\n    \n- `404 Not Found`: Borrowing record not found\n    \n- `409 Conflict`: Book already returned\n    \n\n---\n\n#### **Get All Borrowings**\n\n**Endpoint:**  \n`GET /api/v1/borrowings`\n\n**Description:**  \n  \nReturns all borrowing records.  \n**Accessible by:** Librarians only.\n\n**Responses:**\n\n- `200 OK`: List of all borrowings\n    \n\n---\n\n#### **Get Borrowing by ID**\n\n**Endpoint:**  \n`GET /api/v1/borrowings/{borrowingId}`\n\n**Description:**  \n  \nRetrieves details of a specific borrowing record.  \n  \nAccessible by either the owning Patron or a Librarian.\n\n**Responses:**\n\n- `200 OK`: Borrowing found\n    \n- `404 Not Found`: Borrowing not found\n    \n\n---\n\n#### **Get Borrowings by User**\n\n**Endpoint:**  \n`GET /api/v1/borrowings/user/{userId}`\n\n**Description:**  \n  \nFetches all borrowings associated with a specific user.\n\n**Responses:**\n\n- `200 OK`: Borrowing list\n    \n- `404 Not Found`: User or borrowings not found\n    \n\n---\n\n#### **Get Overdue Borrowings**\n\n**Endpoint:**  \n`GET /api/v1/borrowings/overdue`\n\n**Description:**  \n  \nReturns a list of all borrowings that are overdue.  \n**Accessible by:** Librarians only.\n\n**Responses:**\n\n- `200 OK`: List of overdue borrowings\n    \n\n---\n\n#### **Download Overdue Report (CSV)**\n\n**Endpoint:**  \n`GET /api/v1/borrowings/overdue/report`\n\n**Description:**  \n  \nDownloads a CSV report of overdue borrowings.  \n**Accessible by:** Librarians only.\n\n**Responses:**\n\n- `200 OK`: CSV file download\n    \n- `204 No Content`: No overdue borrowings found"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://postman-rest-api-learner.glitch.me/"
+		}
+	]
+}
