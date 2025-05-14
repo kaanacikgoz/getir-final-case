@@ -5,6 +5,8 @@ A Spring Boot-based microservices application for managing a library system, dev
 
 It provides functionality for user registration, authentication, book management, borrowing operations, and real-time stock updates using Server-Sent Events (SSE).
 
+![Description of Image](https://github.com/kaanacikgoz/getir-final-case/blob/main/Getir-final-case-architecture.png)
+
 ---
 
 ## 🚀 Features
@@ -14,7 +16,7 @@ It provides functionality for user registration, authentication, book management
 - 📚 Book CRUD operations (create, update, delete, search)
 - 📖 Book borrowing & return logic
 - 📡 Real-time stock availability stream (Spring WebFlux)
-- 📊 Overdue borrowing reports (including CSV export)
+- 📊 Overdue borrowing reports
 - 📄 Global error handling with detailed error responses
 - ✅ Comprehensive test coverage with Jacoco
 
@@ -38,6 +40,17 @@ It provides functionality for user registration, authentication, book management
 
 ---
 
+  
+## 📖 API Documentation
+
+- 📬 [Postman Collection](https://documenter.getpostman.com/view/36979805/2sB2qUmPwJ)
+- 🧭 Swagger UIs:
+  - [User Service:](http://localhost:8081/swagger-ui/index.html)
+  - [Book Service:](http://localhost:8082/swagger-ui/index.html)
+  - [Borrowing Service:](http://localhost:8083/swagger-ui/index.html)
+ 
+---
+
 ## 🧑‍💻 Run Locally
 
 To run the application without Docker:
@@ -54,6 +67,7 @@ To run the application without Docker:
    ```bash
    git clone https://github.com/your-username/getir-final-case.git
    cd getir-final-case
+   ```
    
 2. **Start PostgreSQL databases:**
 Ensure that PostgreSQL is running with the following databases created:
@@ -117,39 +131,63 @@ If you prefer running the application in Docker containers:
 
 ## 🗃️ Database Schema
 
-### User Service Database
-- `users` table: id, email, password, role, name, surname, phone, address, createdAt, updatedAt
+### 👥 User Service
 
-### Book Service Database
-- `books` table: id, title, author, isbn, publication_year, genre, stock
+| Table  | Columns | Description |
+|--------|---------|-------------|
+| `users` | **id** (UUID) <br> **email** (String) <br> **password** (String) <br> **role** (Enum) <br> name (String) <br> surname (String) <br> phone (String) <br> address (String) <br> createdAt (Timestamp) <br> updatedAt (Timestamp) | Auth and User Crud operations. |
 
-### Borrowing Service Database
-- `borrowings` table: id, user_id, book_id, borrow_date, due_date, return_date
+### 📚 Book Service
+
+| Table  | Columns | Description |
+|--------|---------|-------------|
+| `books` | **id** (UUID) <br> **title** (String) <br> **author** (String) <br> **isbn** (String) <br> publication_year (Integer) <br> genre (String) <br> **stock** (int) | Independent book catalog with inventory management. |
+
+### 🔄 Borrowing Service
+
+| Table  | Columns | Description |
+|--------|---------|-------------|
+| `borrowings` | **id** (UUID) <br> **user_reference** (UUID) <br> **book_reference** (UUID) <br> **borrow_date** (Timestamp) <br> **due_date** (Timestamp) <br> return_date (Timestamp) | Transaction records using ID references. Maintains eventual consistency through events. |
+
 
 ---
-  
-## 📖 API Documentation
 
-- 📬 [Postman Collection](https://documenter.getpostman.com/view/36979805/2sB2qUmPwJ)
-- 🧭 Swagger UIs:
-  - [User Service:](http://localhost:8081/swagger-ui/index.html)
-  - [Book Service:](http://localhost:8082/swagger-ui/index.html)
-  - [Borrowing Service:](http://localhost:8083/swagger-ui/index.html)
-
----
-
-## Testing
+## 🧪 Testing
 Run tests and generate coverage:
 ```bash
-mvn clean verify
+   mvn clean verify
 ```
 Jacoco reports will be generated under:
-cd <module-name>/target/site/jacoco/index.html
+```bash
+   cd <module-name>/target/site/jacoco/index.html
+```
+📂 Replace `<module-name>` with the actual service name (e.g., user-service, book-service, etc.).
 
-## Additional Notes
-- Use application-docker.yml for containerized deployments.
-- Feign clients are used for communication between services.
-- GlobalExceptionHandler standardizes all error responses.
+## 📝 Additional Notes
+
+- 👤 **Default Librarian Creation**  
+  On initial startup, the system **automatically creates a default user with the `LIBRARIAN` role**  
+  to ensure immediate administrative access for testing and management.
+
+  **Demo Credentials:**
+  ```java
+      Email : admin@getir.com
+      Password: 123456
+  ```
+
+- 🐳 **Docker Support**  
+  Containerized deployment configurations are handled using `application-docker.yml`.  
+  Ensure the correct Spring profile (e.g., `docker`) is activated when deploying via Docker Compose.
+
+- 🔁 **Inter-Service Communication**  
+  All microservices communicate through **Feign Clients**, enabling type-safe and declarative HTTP calls between services.
+
+- ⚠️ **Global Error Handling**  
+  A centralized `GlobalExceptionHandler` standardizes error responses across all services.  
+  Most exceptions are also **logged** with appropriate severity (`warn`, `error`) within:
+  - GlobalExceptionHandler
+  - Service methods
+  - Filters (e.g., JWT authentication)
 
 ## Author
 Kaan Açıkgöz – [LinkedIn](https://www.linkedin.com/in/acikgozkaan/)
